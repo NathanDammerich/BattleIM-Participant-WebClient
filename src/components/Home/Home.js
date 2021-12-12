@@ -1,0 +1,33 @@
+import React, { useState, useEffect } from "react";
+import { Grid } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+
+import { getUser } from "../../actions/user.js";
+import Navbar from "../Navbar/Navbar";
+import Upcoming from "../Upcoming/Upcoming";
+import Teams from "../Teams/Teams";
+import Leagues from "../Leagues/Leagues";
+import useStyles from "./styles";
+
+const Home = () => {
+  const [page, setPage] = useState(1);
+  const dispatch = useDispatch();
+  const classes = useStyles();
+
+  return (
+    <Grid container direction="column">
+      <Grid item xs={1}>
+        <Navbar setPage={setPage} page={page} />
+      </Grid>
+      <Grid item container xs={12} className={classes.paddingTop}>
+        <Grid item xs={1} s={2}></Grid>
+        <Grid item xs={10} s={8}>
+          {page === 1 ? <Upcoming /> : page === 2 ? <Teams /> : <Leagues />}
+        </Grid>
+        <Grid item xs={1} s={2}></Grid>
+      </Grid>
+    </Grid>
+  );
+};
+
+export default Home;
