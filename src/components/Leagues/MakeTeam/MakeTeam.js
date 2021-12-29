@@ -49,6 +49,11 @@ export default function MakeTeam({ divisionID }) {
                     id="teamName"
                     className={classes.input}
                     onChange={handleChange}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                      }
+                    }}
                   />
                 </div>
                 <Button
