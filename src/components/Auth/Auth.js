@@ -13,7 +13,7 @@ const Auth = () => {
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
-    if (email === "gregmyers@gmail.com" && password === "BattleIM") {
+    if (email === "gregmyers@gmail.com" && password === "battleim") {
       history.push("/home");
     }
   };
