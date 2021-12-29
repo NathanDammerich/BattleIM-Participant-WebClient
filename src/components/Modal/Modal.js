@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ReactDom from "react-dom";
 import { Grid } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,7 +11,6 @@ import Quiz from "../Quiz/Quiz";
 import { removeModal } from "../../actions/modals";
 import MakeTeam from "../Leagues/MakeTeam/MakeTeam";
 import User from "../User/User";
-import EditRoster from "../EditRoster/EditRoster";
 import LeagueCard from "../LeagueCard/LeagueCard";
 
 export default function Modal() {
@@ -51,8 +50,6 @@ export default function Modal() {
               <MakeTeam divisionID={modal[modal.length - 1].id} />
             ) : modal[modal.length - 1].type === "User" ? (
               <User />
-            ) : modal[modal.length - 1].type === "EditRoster" ? (
-              <EditRoster team={modal[modal.length - 1].id} />
             ) : modal[modal.length - 1].type === "LeagueCard" ? (
               <LeagueCard leagueID={modal[modal.length - 1].id} />
             ) : (

@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import { Container, Paper, Typography, Button } from "@material-ui/core";
-import ShieldIcon from "@mui/icons-material/Shield";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import logoWhiteBG from "../../images/logoWhiteBG.png";
-import { getUser } from "../../actions/user.js";
-import useLocalStorage from "../../hooks/useLocalStorage.js";
 import useStyles from "./styles";
 
 const Auth = () => {
@@ -33,7 +29,7 @@ const Auth = () => {
   return (
     <Container component="main" maxWidth="xs" className={classes.container}>
       <div className={classes.imgContainer}>
-        <img src={logoWhiteBG} className={classes.logo} />
+        <img src={logoWhiteBG} className={classes.logo} alt="logo" />
       </div>
       <Paper className={classes.paper} elevation={3}>
         <Container>

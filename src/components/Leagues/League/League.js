@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import useUserInfo from "../../../hooks/useUserInfo.js";
+
 import useFetchData from "../../../hooks/useFetchData.js";
 import { Button, Card, Typography, Grid } from "@material-ui/core";
 import { addModal } from "../../../actions/modals.js";
@@ -23,11 +23,7 @@ const months = [
 ];
 
 export default function League({ leagueFromParent, leagueID }) {
-  const [league, setLeague] = useFetchData(
-    leagueFromParent,
-    leagueID,
-    "league"
-  );
+  const [league] = useFetchData(leagueFromParent, leagueID, "league");
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -84,6 +80,7 @@ export default function League({ leagueFromParent, leagueID }) {
               <a
                 href={league.sport.rules}
                 target="_blank"
+                rel="noreferrer"
                 className={classes.link}
               >
                 <Typography variant="body1" color="primary">

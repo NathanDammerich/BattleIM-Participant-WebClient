@@ -1,4 +1,4 @@
-export default (modals = [], action) => {
+const modalReducer = (modals = [], action) => {
   switch (action.type) {
     case "ADD_MODAL":
       return [...modals, action.payload];
@@ -13,3 +13,5 @@ export default (modals = [], action) => {
       return modals;
   }
 };
+
+export default modalReducer;

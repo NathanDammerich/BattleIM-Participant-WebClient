@@ -8,10 +8,8 @@ import {
   useMediaQuery,
 } from "@material-ui/core";
 import { useTheme } from "@material-ui/core";
-import ShieldIcon from "@mui/icons-material/Shield";
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { addModal } from "../../actions/modals";
+import { useSelector } from "react-redux";
 
 import homePageLogo from "../../images/1x/homePageLogo.png";
 import useStyles from "./styles";
@@ -19,7 +17,7 @@ import useStyles from "./styles";
 const Navbar = ({ setPage, page }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const dispatch = useDispatch();
+
   const user = useSelector((state) => state.user);
 
   const sm = useMediaQuery(theme.breakpoints.up("sm"));
@@ -36,7 +34,7 @@ const Navbar = ({ setPage, page }) => {
     <AppBar position="fixed" color="primary" className={classes.appBar}>
       <Toolbar>
         <Grid container alignItems="center">
-          <Grid item xs={12} sm={2} justify="center">
+          <Grid item xs={12} sm={2}>
             {/* <Typography
               variant="h6"
               align={sm ? "left" : "center"}
@@ -45,7 +43,7 @@ const Navbar = ({ setPage, page }) => {
               Battle<span className={classes.secondary}>IM</span>
               <ShieldIcon sx={{ fontSize: 17 }} className={classes.white} />
             </Typography> */}
-            <img src={homePageLogo} className={classes.logo} />
+            <img src={homePageLogo} className={classes.logo} alt="logo" />
           </Grid>
           <Grid item xs={12} sm={8}>
             <Container display="flex" align="center" justify="center">

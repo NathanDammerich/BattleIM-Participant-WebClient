@@ -17,7 +17,7 @@ import { addPassedQuiz } from "../../actions/user";
 import useStyles from "./styles.js";
 
 export default function Quiz({ quizID }) {
-  const [quiz, setQuiz] = useFetchData(null, quizID, "quiz");
+  const [quiz] = useFetchData(null, quizID, "quiz");
   const [startedQuiz, setStartedQuiz] = useState(false);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState(new Array(10).fill(""));

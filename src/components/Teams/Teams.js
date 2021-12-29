@@ -1,8 +1,6 @@
-import { Grid, Typography } from "@material-ui/core";
-import React, { useState, useEffect } from "react";
-import { getTeam } from "../../api";
+import { Grid } from "@material-ui/core";
+import React from "react";
 import { useSelector } from "react-redux";
-import useFetchData from "../../hooks/useFetchData";
 
 import TeamCard from "./TeamCard/TeamCard";
 

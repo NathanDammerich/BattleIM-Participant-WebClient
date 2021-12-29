@@ -1,15 +1,13 @@
-import { Button, Grid, TextField, Typography } from "@material-ui/core";
+import { Button, Grid, Typography } from "@material-ui/core";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import * as api from "../../../../api/index";
 
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { addModal } from "../../../../actions/modals";
+import { useSelector } from "react-redux";
 import useStyles from "./styles";
 
 export default function RosterList({ team }) {
   const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
   const classes = useStyles();
   const [players, setPlayers] = useState(team.players);
   const [invites, setInvites] = useState(team.invites);
@@ -103,7 +101,7 @@ export default function RosterList({ team }) {
               {player.name} {player._id === team.captain && " - Captain"}
             </Typography>
           </Grid>
-          <Grid item xs={6} align="right" alignItems="center">
+          <Grid item xs={6} align="right">
             {isEditingRoster ? (
               <CancelOutlinedIcon
                 alignItems="center"

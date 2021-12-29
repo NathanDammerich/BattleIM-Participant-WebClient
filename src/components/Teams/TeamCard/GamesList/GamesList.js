@@ -1,10 +1,8 @@
 import { Grid, Typography } from "@material-ui/core";
-import React, { useState } from "react";
-import useSessionModal from "../../../../hooks/useSessionModal.js";
+import React from "react";
+
 import { useDispatch } from "react-redux";
 
-import Modal from "../../../Modal/Modal.js";
-import GameCard from "../../../Upcoming/GameCard/GameCard.js";
 import useStyles from "./styles.js";
 import { addModal } from "../../../../actions/modals.js";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { Container, ThemeProvider } from "@material-ui/core";
 import { createTheme } from "@material-ui/core/styles";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";

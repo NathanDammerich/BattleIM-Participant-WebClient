@@ -1,14 +1,11 @@
 import {
-  Paper,
   Typography,
-  Grid,
   IconButton,
   Card,
   CardHeader,
   CardMedia,
   CardContent,
   Collapse,
-  CardActions,
 } from "@material-ui/core";
 import { styled } from "@mui/material/styles";
 import React, { useState, useEffect } from "react";
@@ -17,7 +14,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import useFetchData from "../../../hooks/useFetchData";
 import useStyles from "./styles.js";
-import basketball from "../../../images/basketball.jpg";
 import GamesList from "./GamesList/GamesList";
 import RosterList from "./RosterList/RosterList";
 import { addModal } from "../../../actions/modals";
@@ -35,7 +31,7 @@ const ExpandMore = styled((props) => {
 
 export default function TeamCard({ teamFromParent, teamID, startExpanded }) {
   const [expanded, setExpanded] = useState(startExpanded);
-  const [team, setTeam] = useFetchData(teamFromParent, teamID, "team");
+  const [team] = useFetchData(teamFromParent, teamID, "team");
   const [wins, setWins] = useState(0);
   const [losses, setLosses] = useState(0);
   const dispatch = useDispatch();
@@ -62,7 +58,7 @@ export default function TeamCard({ teamFromParent, teamID, startExpanded }) {
         }
       }
     }
-  }, [team]);
+  }, [team, teamID, teamFromParent?._id]);
 
   const [nextGame, setNextGame] = useState(null);
 
@@ -82,7 +78,7 @@ export default function TeamCard({ teamFromParent, teamID, startExpanded }) {
       }
       console.log(nextGame);
     }
-  }, [team]);
+  }, [team, nextGame]);
 
   const goToLeague = () => {
     console.log(team.league);

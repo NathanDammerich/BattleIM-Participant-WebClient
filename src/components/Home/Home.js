@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Grid } from "@material-ui/core";
-import { useDispatch } from "react-redux";
 
-import { getUser } from "../../actions/user.js";
 import Navbar from "../Navbar/Navbar";
 import Upcoming from "../Upcoming/Upcoming";
 import Teams from "../Teams/Teams";
@@ -11,7 +9,6 @@ import useStyles from "./styles";
 
 const Home = () => {
   const [page, setPage] = useState(1);
-  const dispatch = useDispatch();
   const classes = useStyles();
 
   return (

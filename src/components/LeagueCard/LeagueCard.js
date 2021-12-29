@@ -1,5 +1,5 @@
-import { Card, Typography, Grid, Button } from "@material-ui/core";
-import React, { useEffect } from "react";
+import { Card, Typography, Grid } from "@material-ui/core";
+import React from "react";
 import { useDispatch } from "react-redux";
 
 import { addModal } from "../../actions/modals";
@@ -24,11 +24,7 @@ const months = [
 export default function LeagueCard({ leagueFromParent, leagueID }) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [league, setLeague] = useFetchData(
-    leagueFromParent,
-    leagueID,
-    "league"
-  );
+  const [league] = useFetchData(leagueFromParent, leagueID, "league");
 
   const callOpenTeam = (teamID) => {
     const modal = {
@@ -54,17 +50,18 @@ export default function LeagueCard({ leagueFromParent, leagueID }) {
                 {`${league.description} ${league.sport.description}`}
               </Typography>
             </Grid>
-
             <Grid item xs={12}>
-              <form action="https://www.ducksters.com/sports/basketballrules.php">
-                <Button type="submit" variant="text">
-                  <Typography variant="body1" color="primary">
-                    Rules
-                  </Typography>
-                </Button>
-              </form>
+              <a
+                href={league.sport.rules}
+                target="_blank"
+                rel="noreferrer"
+                className={classes.link}
+              >
+                <Typography variant="body1" color="primary">
+                  Rules
+                </Typography>
+              </a>
             </Grid>
-
             <Grid item xs={12}>
               <Typography
                 variant="body1"
@@ -92,7 +89,6 @@ export default function LeagueCard({ leagueFromParent, leagueID }) {
                 league.playoffStart
               )} - ${getDateString(league.playoffEnd)}`}</Typography>
             </Grid>
-
             <Grid item xs={12} align="center">
               <Typography
                 variant="h6"

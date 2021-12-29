@@ -1,4 +1,4 @@
-export default (user = [], action) => {
+const userReducer = (user = [], action) => {
   switch (action.type) {
     case "FETCH_USER":
       return action.payload;
@@ -12,9 +12,11 @@ export default (user = [], action) => {
     case "ADD_TEAM_USER":
       return {
         ...user,
-        teams: [user.teams, action.payload],
+        teams: [...user.teams, action.payload],
       };
     default:
       return user;
   }
 };
+
+export default userReducer;

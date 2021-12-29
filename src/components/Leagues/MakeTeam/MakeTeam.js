@@ -5,10 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 import useFetchData from "../../../hooks/useFetchData";
 import useStyles from "./styles";
-import { replaceModal } from "../../../actions/modals";
 
 export default function MakeTeam({ divisionID }) {
-  const [division, setDivision] = useFetchData(null, divisionID, "division");
+  const [division] = useFetchData(null, divisionID, "division");
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -44,9 +43,7 @@ export default function MakeTeam({ divisionID }) {
             <Grid item xs={12} align="center">
               <form className={classes.form} action="/" autoComplete="off">
                 <div className={classes.inputContainer}>
-                  <label for="teamName" className={classes.label}>
-                    Team Name
-                  </label>
+                  <label className={classes.label}>Team Name</label>
                   <input
                     name="teamName"
                     id="teamName"

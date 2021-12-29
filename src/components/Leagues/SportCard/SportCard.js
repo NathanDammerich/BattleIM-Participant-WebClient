@@ -6,11 +6,8 @@ import {
   Grid,
 } from "@material-ui/core";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import League from "../League/League.js";
-import Modal from "../../Modal/Modal.js";
 import useClasses from "./styles.js";
 import { addModal } from "../../../actions/modals.js";
 

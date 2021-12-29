@@ -1,6 +1,5 @@
 //import { UPCOMING, LEAGUES, TEAMS } from "../constants/actionTypes";
-
-export default (games = [], action) => {
+const gamesReducer = (games = [], action) => {
   switch (action.type) {
     case "FETCH_GAMES":
       return action.payload;
@@ -8,3 +7,5 @@ export default (games = [], action) => {
       return games;
   }
 };
+
+export default gamesReducer;

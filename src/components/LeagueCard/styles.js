@@ -29,4 +29,8 @@ export default makeStyles((theme) => ({
       textDecoration: "underline",
     },
   },
+  link: {
+    textDecoration: "none",
+    textTransform: "uppercase",
+  },
 }));

@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Grid, Typography } from "@material-ui/core";
+import React, { useEffect } from "react";
+import { Grid } from "@material-ui/core";
 import { useSelector } from "react-redux";
 
 import useFetchData from "../../hooks/useFetchData";
 import GameCard from "./GameCard/GameCard";
-import useStyles from "./styles";
 
 const Upcoming = () => {
-  const classes = useStyles();
   const user = useSelector((state) => state.user);
   console.log(user.teams);
-  const [games, setGames] = useFetchData(null, user.teams, "upcomingGames");
+  const [games] = useFetchData(null, user.teams, "upcomingGames");
   useEffect(() => {
     console.log(games);
   }, [games]);

@@ -1,4 +1,4 @@
-export default (teams = [], action) => {
+const teamsReducer = (teams = [], action) => {
   switch (action.type) {
     case "FETCH_TEAMS":
       return action.payload;
@@ -6,3 +6,5 @@ export default (teams = [], action) => {
       return teams;
   }
 };
+
+export default teamsReducer;
