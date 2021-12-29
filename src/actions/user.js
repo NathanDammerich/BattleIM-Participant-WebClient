@@ -13,8 +13,8 @@ export const getUser = (id) => async (dispatch) => {
 
 export const addPassedQuiz = (userID, quizID) => async (dispatch) => {
   try {
-    const data = await api.addPassedQuiz(userID, { quizID: quizID });
-    console.log(data);
+    //const data = await api.addPassedQuiz(userID, { quizID: quizID });
+    //console.log(data);
     dispatch({ type: "ADD_PASSED_QUIZ", payload: quizID });
   } catch (error) {
     console.log(error);
