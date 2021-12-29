@@ -13,7 +13,7 @@ const Auth = () => {
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
-    if (email === "gregmeyers@gmail.com" && password === "BattleIM") {
+    if (email === "gregmyers@gmail.com" && password === "BattleIM") {
       history.push("/home");
     }
   };
@@ -36,7 +36,7 @@ const Auth = () => {
           <Typography variant="subtitle1" className={classes.heading}>
             Sign in to your account
           </Typography>
-          <form className={classes.form} action="/">
+          <form className={classes.form} action="/" onSubmit={handleSubmit}>
             <div className={classes.inputContainer}>
               <label for="email" className={classes.label}>
                 Email
@@ -46,6 +46,7 @@ const Auth = () => {
                 id="email"
                 className={classes.input}
                 onChange={handleEmailChange}
+                autoComplete="off"
               />
             </div>
             <div className={classes.inputContainer}>
@@ -61,7 +62,13 @@ const Auth = () => {
                 id="password"
                 color="secondary"
                 className={classes.input}
+                autoComplete="off"
                 onChange={handlePasswordChange}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleSubmit();
+                  }
+                }}
               />
             </div>
             <Button
