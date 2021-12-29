@@ -1,15 +1,8 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
-  paper: {
-    display: "flex",
-    flexDirection: "column",
-    padding: theme.spacing(2),
-  },
-  root: {
-    "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-    },
+  card: {
+    padding: "20px 20px",
   },
   form: {
     display: "flex",
@@ -48,22 +41,5 @@ export default makeStyles((theme) => ({
   continueButton: {
     marginTop: "30px",
     textTransform: "capitalize",
-  },
-  logo: {
-    width: "220px",
-    margin: "0px 0px",
-  },
-  container: {
-    paddingTop: "40px",
-    // textAlign: "center",
-  },
-  imgContainer: {
-    textAlign: "center",
-  },
-  secondary: {
-    color: theme.palette.secondary.main,
-  },
-  primary: {
-    color: theme.palette.primary.main,
   },
 }));

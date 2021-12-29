@@ -1,5 +1,14 @@
+import { getListItemUtilityClass } from "@mui/material";
 import { useState, useEffect } from "react";
-import { getLeague, getGame, getTeam, getQuiz } from "../api";
+import {
+  getLeague,
+  getGame,
+  getTeam,
+  getQuiz,
+  getDivision,
+  getUpcomingGames,
+  getTeamsArray,
+} from "../api";
 
 export default function useFetchData(dataFromParent, dataID, identifier) {
   const [data, setData] = useState(null);
@@ -10,7 +19,7 @@ export default function useFetchData(dataFromParent, dataID, identifier) {
     } else {
       fetchData(dataID).then((res) => setData(res.data));
     }
-  }, []);
+  }, [dataFromParent, dataID, identifier]);
 
   const fetchData = async (dataID) => {
     let data = null;
@@ -22,6 +31,12 @@ export default function useFetchData(dataFromParent, dataID, identifier) {
       data = await getTeam(dataID);
     } else if (identifier === "quiz") {
       data = await getQuiz(dataID);
+    } else if (identifier === "division") {
+      data = await getDivision(dataID);
+    } else if (identifier === "teams") {
+      data = await getTeamsArray(dataID);
+    } else if (identifier === "upcomingGames") {
+      data = await getUpcomingGames(dataID);
     }
     return data;
   };

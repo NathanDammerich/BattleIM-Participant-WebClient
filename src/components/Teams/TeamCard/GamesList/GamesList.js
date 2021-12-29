@@ -8,7 +8,7 @@ import GameCard from "../../../Upcoming/GameCard/GameCard.js";
 import useStyles from "./styles.js";
 import { addModal } from "../../../../actions/modals.js";
 
-export default function GamesList({ games }) {
+export default function GamesList({ games, teamID }) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -19,6 +19,18 @@ export default function GamesList({ games }) {
     };
     dispatch(addModal(modal));
   };
+
+  for (let game of games) {
+    if (game.homeTeam._id === teamID) {
+      game.opponent = game.awayTeam;
+      game.opponentScore = game.results?.awayScore;
+      game.userScore = game.results?.homeScore;
+    } else {
+      game.opponent = game.homeTeam;
+      game.opponentScore = game.results?.homeScore;
+      game.userScore = game.results?.awayScore;
+    }
+  }
 
   return (
     <>
@@ -32,7 +44,7 @@ export default function GamesList({ games }) {
               className={
                 !game.results
                   ? classes.upcoming
-                  : game.results.homeScore > game.results.awayScore
+                  : teamID === game.results.winner
                   ? classes.win
                   : classes.loss
               }
@@ -50,16 +62,14 @@ export default function GamesList({ games }) {
               </Grid>
               <Grid item xs={4}>
                 <Typography variant="body2">
-                  {game.time} {game.date}
+                  {game.time} {game.day}
                 </Typography>
               </Grid>
               {game.results ? (
                 <Grid item xs={4} align="right">
                   <Typography variant="body2">
-                    {game.results.homeScore > game.results.awayScore
-                      ? "W"
-                      : "L"}{" "}
-                    ({game.results.homeScore}-{game.results.awayScore})
+                    {game.results.winner === teamID ? "W" : "L"} (
+                    {game.userScore}-{game.opponentScore})
                   </Typography>
                 </Grid>
               ) : (

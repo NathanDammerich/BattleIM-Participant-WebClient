@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Paper, Typography, Button } from "@material-ui/core";
 import ShieldIcon from "@mui/icons-material/Shield";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
+import logoWhiteBG from "../../images/logoWhiteBG.png";
 import { getUser } from "../../actions/user.js";
 import useLocalStorage from "../../hooks/useLocalStorage.js";
 import useStyles from "./styles";
@@ -11,19 +12,29 @@ import useStyles from "./styles";
 const Auth = () => {
   const classes = useStyles();
   const history = useHistory();
-  const dispatch = useDispatch();
-  dispatch(getUser("61b538531daa9a625b0608ea"));
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
-    history.push("/home");
+    if (email === "gregmeyers@gmail.com" && password === "BattleIM") {
+      history.push("/home");
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
   };
 
   return (
-    <Container component="main" maxWidth="xs" pt={56}>
-      <Typography variant="h4" align="center" className={classes.logo}>
-        Battle<span className={classes.secondary}>IM</span>
-        <ShieldIcon className={classes.primary} />
-      </Typography>
+    <Container component="main" maxWidth="xs" className={classes.container}>
+      <div className={classes.imgContainer}>
+        <img src={logoWhiteBG} className={classes.logo} />
+      </div>
       <Paper className={classes.paper} elevation={3}>
         <Container>
           <Typography variant="subtitle1" className={classes.heading}>
@@ -34,7 +45,12 @@ const Auth = () => {
               <label for="email" className={classes.label}>
                 Email
               </label>
-              <input name="email" id="email" className={classes.input} />
+              <input
+                name="email"
+                id="email"
+                className={classes.input}
+                onChange={handleEmailChange}
+              />
             </div>
             <div className={classes.inputContainer}>
               <div className={classes.passwordLabelRow}>
@@ -49,6 +65,7 @@ const Auth = () => {
                 id="password"
                 color="secondary"
                 className={classes.input}
+                onChange={handlePasswordChange}
               />
             </div>
             <Button

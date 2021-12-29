@@ -6,3 +6,7 @@ export const addModal = (modal) => (dispatch) => {
 export const removeModal = () => (dispatch) => {
   dispatch({ type: "REMOVE_MODAL", payload: "FUIMLEAGUES" });
 };
+
+export const replaceModal = (modal) => (dispatch) => {
+  dispatch({ type: "REPLACE_MODAL", payload: modal });
+};

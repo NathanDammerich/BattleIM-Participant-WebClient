@@ -32,4 +32,12 @@ export default makeStyles((theme) => ({
     width: "110px",
     margin: "0px 0px",
   },
+  user: {
+    color: theme.palette.gray.main,
+    "&:hover": {
+      color: "white",
+      transition: "150ms",
+      cursor: "pointer",
+    },
+  },
 }));

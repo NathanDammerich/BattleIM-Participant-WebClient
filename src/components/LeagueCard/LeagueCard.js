@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { Card, Typography, Grid, Button } from "@material-ui/core";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-import { useDispatch, useSelector } from "react-redux";
-import useUserInfo from "../../../hooks/useUserInfo.js";
-import useFetchData from "../../../hooks/useFetchData.js";
-import { Button, Card, Typography, Grid } from "@material-ui/core";
-import { addModal } from "../../../actions/modals.js";
+import { addModal } from "../../actions/modals";
 import useStyles from "./styles.js";
+import useFetchData from "../../hooks/useFetchData";
 
 const months = [
   "January",
@@ -22,41 +21,19 @@ const months = [
   "December",
 ];
 
-export default function League({ leagueFromParent, leagueID }) {
+export default function LeagueCard({ leagueFromParent, leagueID }) {
+  const classes = useStyles();
+  const dispatch = useDispatch();
   const [league, setLeague] = useFetchData(
     leagueFromParent,
     leagueID,
     "league"
   );
 
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-
-  const attemptMakeTeam = (divisionID) => {
-    if (!league.sport.quiz) {
-      return makeTeam(divisionID);
-    }
-    if (user.quizzesPassed.includes(league.sport.quiz)) {
-      console.log("Quiz already passed");
-      return makeTeam(divisionID);
-    } else {
-      console.log("Quiz not passed");
-      return goToQuiz(league.sport.quiz);
-    }
-  };
-
-  const goToQuiz = (quizID) => {
+  const callOpenTeam = (teamID) => {
     const modal = {
-      type: "Quiz",
-      id: quizID,
-    };
-    dispatch(addModal(modal));
-  };
-
-  const makeTeam = (divisionID) => {
-    const modal = {
-      type: "MakeTeam",
-      id: divisionID,
+      type: "Team",
+      id: teamID,
     };
     dispatch(addModal(modal));
   };
@@ -66,8 +43,6 @@ export default function League({ leagueFromParent, leagueID }) {
     const monthString = months[newDate.getMonth()];
     return `${monthString} ${newDate.getDate()}`;
   };
-
-  const classes = useStyles();
 
   return (
     <>
@@ -81,15 +56,13 @@ export default function League({ leagueFromParent, leagueID }) {
             </Grid>
 
             <Grid item xs={12}>
-              <a
-                href={league.sport.rules}
-                target="_blank"
-                className={classes.link}
-              >
-                <Typography variant="body1" color="primary">
-                  Rules
-                </Typography>
-              </a>
+              <form action="https://www.ducksters.com/sports/basketballrules.php">
+                <Button type="submit" variant="text">
+                  <Typography variant="body1" color="primary">
+                    Rules
+                  </Typography>
+                </Button>
+              </form>
             </Grid>
 
             <Grid item xs={12}>
@@ -126,36 +99,26 @@ export default function League({ leagueFromParent, leagueID }) {
                 color="secondary"
                 className={classes.divisionHeading}
               >
-                Divisions
+                Standings
               </Typography>
             </Grid>
-            {league.divisions.map((division) => (
-              <Grid
-                item
-                xs={12}
-                key={division._id}
-                container
-                alignItems="center"
-              >
-                <Grid item xs={6}>
-                  <Typography variant="body1" color="primary" align="left">
-                    {division.timeSlot}
+            {league.teams.map((team) => (
+              <Grid item container xs={12} key={team._id}>
+                <Grid item xs={6} key={team._id}>
+                  <Typography
+                    variant="body1"
+                    align="left"
+                    className={classes.clickable}
+                    onClick={() => callOpenTeam(team._id)}
+                  >
+                    {team.name}
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  {division.teams.length === division.maxTeams ? (
-                    <Typography variant="body1" color="secondary">
-                      FULL
-                    </Typography>
-                  ) : (
-                    <Button
-                      variant="text"
-                      size="small"
-                      onClick={() => attemptMakeTeam(division._id)}
-                    >
-                      Create Team
-                    </Button>
-                  )}
+                  <Typography
+                    variant="body1"
+                    align="right"
+                  >{`${team.wins}-${team.losses}`}</Typography>
                 </Grid>
               </Grid>
             ))}

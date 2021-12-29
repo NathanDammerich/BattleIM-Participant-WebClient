@@ -18,5 +18,6 @@ export default makeStyles((theme) => ({
       cursor: "pointer",
       opacity: ".85",
     },
+    margin: "25px 0px",
   },
 }));

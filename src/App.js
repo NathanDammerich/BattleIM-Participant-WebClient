@@ -2,7 +2,9 @@ import React from "react";
 import { Container, createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { createTheme } from "@material-ui/core/styles";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
+import { getUser } from "./actions/user";
 import Modal from "./components/Modal/Modal";
 import Auth from "./components/Auth/Auth";
 import Home from "./components/Home/Home";
@@ -12,6 +14,7 @@ const App = () => {
     palette: {
       primary: {
         main: "#2b2d42",
+        light: "rgba(43, 45, 66, 0.3)",
       },
       secondary: {
         main: "#d90429",
@@ -24,6 +27,9 @@ const App = () => {
       },
     },
   });
+
+  const dispatch = useDispatch();
+  dispatch(getUser("61c0f2c5d1e0e4bcadaba576"));
 
   return (
     <ThemeProvider theme={theme}>

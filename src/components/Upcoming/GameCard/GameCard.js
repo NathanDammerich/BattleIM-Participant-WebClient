@@ -16,10 +16,11 @@ import TeamCard from "../../Teams/TeamCard/TeamCard";
 import Modal from "../../Modal/Modal";
 import useStyles from "./styles";
 import { getGame, getTeam } from "../../../api";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addModal } from "../../../actions/modals";
 
 export default function GameCard({ gameFromParent, gameID }) {
+  const user = useSelector((state) => state.user);
   const classes = useStyles();
   const [game, setGame] = useState(null);
 
@@ -49,6 +50,14 @@ export default function GameCard({ gameFromParent, gameID }) {
     return game;
   };
 
+  const callOpenLeague = () => {
+    const modal = {
+      type: "LeagueCard",
+      id: game.leagueID,
+    };
+    dispatch(addModal(modal));
+  };
+
   if (!game) {
     return null;
   }
@@ -59,27 +68,61 @@ export default function GameCard({ gameFromParent, gameID }) {
           <Grid item xs={12} container className={classes.marginTop}>
             <Grid item xs={12} sm={5}>
               <Typography
-                color="primary"
                 variant="h4"
-                className={classes.clickable}
-                onClick={() => openTeam(game.homeTeam._id)}
+                className={
+                  game.results
+                    ? game.results.winner === game.homeTeam._id
+                      ? classes.win
+                      : classes.loss
+                    : classes.upcoming
+                }
+                onClick={() =>
+                  openTeam(
+                    user.teams.includes(game.homeTeam._id)
+                      ? game.homeTeam._id
+                      : game.awayTeam._id
+                  )
+                }
               >
-                {game.homeTeam.name}
+                {user.teams.includes(game.homeTeam._id)
+                  ? game.homeTeam.name
+                  : game.awayTeam.name}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={2}>
-              <Typography color="secondary" variant="h4">
-                vs
-              </Typography>
+              {game.results ? (
+                <Typography
+                  color="primary"
+                  variant="h4"
+                >{`${game.results.homeScore} - ${game.results.awayScore}`}</Typography>
+              ) : (
+                <Typography color="secondary" variant="h4">
+                  vs
+                </Typography>
+              )}
             </Grid>
             <Grid item xs={12} sm={5} className={classes.centerThenLeft}>
               <Typography
                 color="primary"
                 variant="h4"
-                className={classes.clickable}
-                onClick={() => openTeam(game.opponent._id)}
+                className={
+                  game.results
+                    ? game.results.winner === game.awayTeam._id
+                      ? classes.win
+                      : classes.loss
+                    : classes.upcoming
+                }
+                onClick={() =>
+                  openTeam(
+                    user.teams.includes(game.homeTeam._id)
+                      ? game.awayTeam._id
+                      : game.homeTeam._id
+                  )
+                }
               >
-                {game.opponent.name}
+                {user.teams.includes(game.awayTeam._id)
+                  ? game.homeTeam.name
+                  : game.awayTeam.name}
               </Typography>
             </Grid>
           </Grid>
@@ -109,7 +152,7 @@ export default function GameCard({ gameFromParent, gameID }) {
                   Date
                 </Typography>
                 <Typography color="primary" variant="body1">
-                  {game.date}
+                  {game.day}
                 </Typography>
               </Container>
             </Grid>
@@ -141,7 +184,16 @@ export default function GameCard({ gameFromParent, gameID }) {
                 </Typography>
               </Container>
             </Grid>
-            <Grid item container direction="column" xs={12} sm={6} md={3}>
+            <Grid
+              item
+              container
+              direction="column"
+              xs={12}
+              sm={6}
+              md={3}
+              className={classes.clickable}
+              onClick={callOpenLeague}
+            >
               <Container>
                 <Typography
                   color="primary"

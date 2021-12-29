@@ -10,6 +10,8 @@ import {
 import { useTheme } from "@material-ui/core";
 import ShieldIcon from "@mui/icons-material/Shield";
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addModal } from "../../actions/modals";
 
 import homePageLogo from "../../images/1x/homePageLogo.png";
 import useStyles from "./styles";
@@ -17,13 +19,23 @@ import useStyles from "./styles";
 const Navbar = ({ setPage, page }) => {
   const classes = useStyles();
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
   const sm = useMediaQuery(theme.breakpoints.up("sm"));
+
+  const goToUser = (e) => {
+    // const modal = {
+    //   id: user._id,
+    //   type: "User",
+    // };
+    // dispatch(addModal(modal));
+  };
 
   return (
     <AppBar position="fixed" color="primary" className={classes.appBar}>
       <Toolbar>
-        <Grid container>
+        <Grid container alignItems="center">
           <Grid item xs={12} sm={2} justify="center">
             {/* <Typography
               variant="h6"
@@ -67,8 +79,13 @@ const Navbar = ({ setPage, page }) => {
             </Container>
           </Grid>
           <Grid item xs={12} sm={2}>
-            <Typography variant="subtitle1" align={sm ? "right" : "center"}>
-              Account
+            <Typography
+              variant="subtitle1"
+              align={sm ? "right" : "center"}
+              className={classes.user}
+              onClick={goToUser}
+            >
+              {user.name}
             </Typography>
           </Grid>
         </Grid>

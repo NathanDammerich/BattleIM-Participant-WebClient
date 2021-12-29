@@ -9,6 +9,10 @@ import TeamCard from "../Teams/TeamCard/TeamCard";
 import League from "../Leagues/League/League";
 import Quiz from "../Quiz/Quiz";
 import { removeModal } from "../../actions/modals";
+import MakeTeam from "../Leagues/MakeTeam/MakeTeam";
+import User from "../User/User";
+import EditRoster from "../EditRoster/EditRoster";
+import LeagueCard from "../LeagueCard/LeagueCard";
 
 export default function Modal() {
   const classes = useStyles();
@@ -35,6 +39,7 @@ export default function Modal() {
               <GameCard gameID={modal[modal.length - 1].id} />
             ) : modal[modal.length - 1].type === "Team" ? (
               <TeamCard
+                teamFromParent={null}
                 teamID={modal[modal.length - 1].id}
                 startExpanded={true}
               />
@@ -42,6 +47,14 @@ export default function Modal() {
               <League leagueID={modal[modal.length - 1].id} />
             ) : modal[modal.length - 1].type === "Quiz" ? (
               <Quiz quizID={modal[modal.length - 1].id} />
+            ) : modal[modal.length - 1].type === "MakeTeam" ? (
+              <MakeTeam divisionID={modal[modal.length - 1].id} />
+            ) : modal[modal.length - 1].type === "User" ? (
+              <User />
+            ) : modal[modal.length - 1].type === "EditRoster" ? (
+              <EditRoster team={modal[modal.length - 1].id} />
+            ) : modal[modal.length - 1].type === "LeagueCard" ? (
+              <LeagueCard leagueID={modal[modal.length - 1].id} />
             ) : (
               <h1>unrecognized modal type</h1>
             )}

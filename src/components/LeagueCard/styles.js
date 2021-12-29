@@ -2,14 +2,14 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
   card: {
-    marginTop: "25px",
-    maxWidth: "650px",
-    marginBottom: "25px",
-    transition: "height 5s",
+    margin: "25px 0",
+    maxWidth: "500px",
+  },
+  container: {
+    padding: "10px 25px",
   },
   secondary: {
     color: theme.palette.secondary.main,
-    marginBottom: "8px",
   },
   header: {
     marginBottom: "0px",
@@ -23,7 +23,10 @@ export default makeStyles((theme) => ({
   name: {
     marginBottom: "10px",
   },
-  img: {
-    borderRadius: ".5%",
+  clickable: {
+    "&:hover": {
+      cursor: "pointer",
+      textDecoration: "underline",
+    },
   },
 }));

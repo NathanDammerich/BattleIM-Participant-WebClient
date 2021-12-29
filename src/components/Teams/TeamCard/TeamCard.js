@@ -12,13 +12,15 @@ import {
 } from "@material-ui/core";
 import { styled } from "@mui/material/styles";
 import React, { useState, useEffect } from "react";
-import { getGame, getGames, getTeam } from "../../../api";
+import { useDispatch } from "react-redux";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+import useFetchData from "../../../hooks/useFetchData";
 import useStyles from "./styles.js";
 import basketball from "../../../images/basketball.jpg";
 import GamesList from "./GamesList/GamesList";
 import RosterList from "./RosterList/RosterList";
+import { addModal } from "../../../actions/modals";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -32,9 +34,64 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function TeamCard({ teamFromParent, teamID, startExpanded }) {
-  const [team, setTeam] = useState(null);
-
   const [expanded, setExpanded] = useState(startExpanded);
+  const [team, setTeam] = useFetchData(teamFromParent, teamID, "team");
+  const [wins, setWins] = useState(0);
+  const [losses, setLosses] = useState(0);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (team) {
+      setWins(0);
+      setLosses(0);
+      for (let game of team.games) {
+        if (game.results) {
+          if (teamID) {
+            if (teamID === game.results.winner) {
+              setWins((wins) => wins + 1);
+            } else {
+              setLosses((losses) => losses + 1);
+            }
+          } else {
+            if (teamFromParent._id === game.results.winner) {
+              setWins((wins) => wins + 1);
+            } else {
+              setLosses((losses) => losses + 1);
+            }
+          }
+        }
+      }
+    }
+  }, [team]);
+
+  const [nextGame, setNextGame] = useState(null);
+
+  useEffect(() => {
+    if (team) {
+      const now = new Date();
+      let foundUpcoming = false;
+      for (let game of team.games) {
+        const gameDate = new Date(game.date);
+        if (gameDate > now) {
+          console.log("found upcoming");
+          if (!foundUpcoming) {
+            setNextGame(game);
+            foundUpcoming = true;
+          }
+        }
+      }
+      console.log(nextGame);
+    }
+  }, [team]);
+
+  const goToLeague = () => {
+    console.log(team.league);
+    const modal = {
+      type: "LeagueCard",
+      id: team.league,
+    };
+    dispatch(addModal(modal));
+  };
 
   const toggleDropdown = () => {
     setExpanded(!expanded);
@@ -42,53 +99,53 @@ export default function TeamCard({ teamFromParent, teamID, startExpanded }) {
 
   const classes = useStyles();
 
-  useEffect(() => {
-    if (teamFromParent) {
-      setTeam(teamFromParent);
-    } else {
-      fetchTeam(teamID).then((team) => {
-        setTeam(team.data);
-      });
-    }
-  }, []);
-
-  const fetchTeam = async (id) => {
-    const team = await getTeam(id);
-    return team;
-  };
-
   if (!team) {
     return null;
   }
   return (
     <Card className={classes.card}>
-      <CardHeader title={team.league} className={classes.header} />
+      <CardHeader
+        title={team.leagueName}
+        className={classes.header}
+        onClick={goToLeague}
+      />
       <Typography variant="subtitle1" className={classes.secondary}>
         {team.org.description}
       </Typography>
       <CardMedia
         component="img"
         height="194"
-        image={basketball}
+        image={team.sport.image}
         alt="basketball"
+        className={classes.img}
       />
       <CardContent className={classes.content}>
         <Typography variant="h5" className={classes.name}>
-          {team.name} (1-1)
+          {`${team.name} (${wins}-${losses})`}
         </Typography>
         {!expanded ? (
           <>
-            <Typography variant="subtitle1" align="left">
-              Next Game: {team.games[0].time} {team.games[0].date}
-            </Typography>
-            <Typography variant="subtitle1" align="left">
-              Location: {team.games[0].location}
-            </Typography>{" "}
+            {team.games.length > 0 ? (
+              <>
+                {nextGame && (
+                  <>
+                    <Typography variant="subtitle1" align="left">
+                      Next Game: {nextGame.time} {nextGame.day}
+                    </Typography>
+                    <Typography variant="subtitle1" align="left">
+                      Location: {nextGame.location}
+                    </Typography>{" "}
+                  </>
+                )}
+              </>
+            ) : (
+              <> </>
+            )}
           </>
         ) : (
           <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <GamesList games={team.games} />
-            <RosterList roster={team.players} />
+            <GamesList games={team.games} teamID={team._id} />
+            <RosterList team={team} />
           </Collapse>
         )}
       </CardContent>

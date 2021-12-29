@@ -3,18 +3,17 @@ import {
   Grid,
   Typography,
   Button,
-  FormControl,
-  FormLabel,
   RadioGroup,
   FormControlLabel,
   Radio,
   Container,
 } from "@material-ui/core";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { removeModal } from "../../actions/modals";
 import React, { useState } from "react";
 import useFetchData from "../../hooks/useFetchData";
 
+import { addPassedQuiz } from "../../actions/user";
 import useStyles from "./styles.js";
 
 export default function Quiz({ quizID }) {
@@ -25,8 +24,9 @@ export default function Quiz({ quizID }) {
   const [userScore, setUserScore] = useState(0);
   const [submittedQuiz, setSubmittedQuiz] = useState(false);
   const [userAnswersIndex, setUserAnswersIndex] = useState([]);
-  const [correctAnswersIndex, setCorrectAnswersIndex] = useState([]);
   const [userCorrect, setUserCorrect] = useState(new Array(10).fill(false));
+
+  const user = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -47,7 +47,7 @@ export default function Quiz({ quizID }) {
     }
     setUserScore(rightAnswers);
     if (rightAnswers >= quiz.minimumScore) {
-      addPassedQuiz();
+      callAddPassedQuiz();
     }
     setSubmittedQuiz(true);
   };
@@ -56,8 +56,8 @@ export default function Quiz({ quizID }) {
     console.log("retry quiz");
   };
 
-  const addPassedQuiz = () => {
-    console.log(quiz._id);
+  const callAddPassedQuiz = () => {
+    dispatch(addPassedQuiz(user._id, quizID));
   };
 
   const handleRadioChange = (event) => {
