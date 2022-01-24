@@ -23,11 +23,11 @@ export default function GamesList({ games, teamID }) {
     if (game.homeTeam._id === teamID) {
       game.opponent = game.awayTeam;
       game.opponentScore = homeIsWinner ? game.results?.losingScore : game.results?.winningScore;
-      game.userScore = game.results?.homeScore;
+      game.userScore = !homeIsWinner ? game.results?.losingScore : game.results?.winningScore;;
     } else {
       game.opponent = game.homeTeam;
       game.opponentScore = !homeIsWinner ? game.results?.losingScore : game.results?.winningScore;
-      game.userScore = game.results?.awayScore;
+      game.userScore = homeIsWinner ? game.results?.losingScore : game.results?.winningScore;
     }
   }
 
