@@ -43,13 +43,13 @@ export default function TeamCard({ teamFromParent, teamID, startExpanded }) {
       for (let game of team.games) {
         if (game.results) {
           if (teamID) {
-            if (teamID === game.results.winner) {
+            if (teamID === game.results.winningTeam) {
               setWins((wins) => wins + 1);
             } else {
               setLosses((losses) => losses + 1);
             }
           } else {
-            if (teamFromParent._id === game.results.winner) {
+            if (teamFromParent._id === game.results.winningTeam) {
               setWins((wins) => wins + 1);
             } else {
               setLosses((losses) => losses + 1);
