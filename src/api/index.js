@@ -4,6 +4,9 @@ const API = axios.create({
   baseURL: "https://battleim-backend.herokuapp.com/",
 });
 
+export const signin = (formData) => API.post("users/signin", formData);
+export const signup = (formData) => API.post("users/signup", formData);
+
 export const getGames = () => API.get("/games");
 export const getGame = (id) => API.get(`/games/${id}`);
 export const updateGame = (id, updatedGame) =>
