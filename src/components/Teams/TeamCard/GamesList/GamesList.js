@@ -19,14 +19,15 @@ export default function GamesList({ games, teamID }) {
   };
 
   for (let game of games) {
+    const homeIsWinner = game?.results && game?.homeTeam?._id === game?.results?.winningTeam;
     if (game.homeTeam._id === teamID) {
       game.opponent = game.awayTeam;
-      game.opponentScore = game.results?.awayScore;
-      game.userScore = game.results?.homeScore;
+      game.opponentScore = homeIsWinner ? game.results?.losingScore : game.results?.winningScore;
+      game.userScore = !homeIsWinner ? game.results?.losingScore : game.results?.winningScore;;
     } else {
       game.opponent = game.homeTeam;
-      game.opponentScore = game.results?.homeScore;
-      game.userScore = game.results?.awayScore;
+      game.opponentScore = !homeIsWinner ? game.results?.losingScore : game.results?.winningScore;
+      game.userScore = homeIsWinner ? game.results?.losingScore : game.results?.winningScore;
     }
   }
 
@@ -42,7 +43,7 @@ export default function GamesList({ games, teamID }) {
               className={
                 !game.results
                   ? classes.upcoming
-                  : teamID === game.results.winner
+                  : teamID === game.results.winningTeam
                   ? classes.win
                   : classes.loss
               }
@@ -66,7 +67,7 @@ export default function GamesList({ games, teamID }) {
               {game.results ? (
                 <Grid item xs={4} align="right">
                   <Typography variant="body2">
-                    {game.results.winner === teamID ? "W" : "L"} (
+                    {game.results.winningTeam === teamID ? "W" : "L"} (
                     {game.userScore}-{game.opponentScore})
                   </Typography>
                 </Grid>

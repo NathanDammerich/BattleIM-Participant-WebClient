@@ -23,36 +23,42 @@ export default function GameCard({ gameFromParent, gameID }) {
     dispatch(addModal(modal));
   };
 
+  const homeIsWinner =
+    game?.results && game?.homeTeam?._id === game?.results?.winningTeam;
+  const getScore = () => {
+    if (!game?.results) {
+      return "vs";
+    }
+    return `${leftTeam.score} - ${rightTeam.score}`;
+  };
+
   useEffect(() => {
     if (gameFromParent) {
       setGame(gameFromParent);
     } else {
-      fetchGame(gameID).then((game) => {
+      getGame(gameID).then((game) => {
         setGame(game.data);
-        console.log(game.data);
       });
     }
   }, [gameFromParent, gameID]);
 
   useEffect(() => {
     if (game) {
-      if (user.teams.includes(game.homeTeam._id)) {
-        setLeftTeam({ team: game.homeTeam, score: game.results?.homeScore });
-        setRightTeam({ team: game.awayTeam, score: game.results?.awayScore });
-      } else if (user.teams.includes(game.awayTeam._id)) {
-        setLeftTeam({ team: game.awayTeam, score: game.results?.awayScore });
-        setRightTeam({ team: game.homeTeam, score: game.results?.homeScore });
+      const homeScore = homeIsWinner
+        ? game.results?.winningScore
+        : game.results?.losingScore;
+      const awayScore = !homeIsWinner
+        ? game.results?.winningScore
+        : game.results?.losingScore;
+      if (user.teams.includes(game.awayTeam._id)) {
+        setLeftTeam({ team: game.awayTeam, score: awayScore });
+        setRightTeam({ team: game.homeTeam, score: homeScore });
       } else {
-        setLeftTeam({ team: game.homeTeam, score: game.results?.homeScore });
-        setRightTeam({ team: game.awayTeam, score: game.results?.awayScore });
+        setLeftTeam({ team: game.homeTeam, score: homeScore });
+        setRightTeam({ team: game.awayTeam, score: awayScore });
       }
     }
-  }, [game, user.teams]);
-
-  const fetchGame = async (id) => {
-    const game = await getGame(id);
-    return game;
-  };
+  }, [game, user.teams, homeIsWinner]);
 
   const callOpenLeague = () => {
     const modal = {
@@ -76,7 +82,7 @@ export default function GameCard({ gameFromParent, gameID }) {
                   variant="h4"
                   className={
                     game.results
-                      ? game.results.winner === leftTeam.team._id
+                      ? game.results.winningTeam === leftTeam.team._id
                         ? classes.win
                         : classes.loss
                       : classes.upcoming
@@ -87,16 +93,9 @@ export default function GameCard({ gameFromParent, gameID }) {
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={2}>
-                {game.results ? (
-                  <Typography
-                    color="primary"
-                    variant="h4"
-                  >{`${leftTeam.score} - ${rightTeam.score}`}</Typography>
-                ) : (
-                  <Typography color="secondary" variant="h4">
-                    vs
-                  </Typography>
-                )}
+                <Typography color="primary" variant="h4">
+                  {getScore()}
+                </Typography>
               </Grid>
               <Grid item xs={12} sm={5} className={classes.centerThenLeft}>
                 <Typography
@@ -104,7 +103,7 @@ export default function GameCard({ gameFromParent, gameID }) {
                   variant="h4"
                   className={
                     game.results
-                      ? game.results.winner === rightTeam.team._id
+                      ? game.results.winningTeam === rightTeam.team._id
                         ? classes.win
                         : classes.loss
                       : classes.upcoming
