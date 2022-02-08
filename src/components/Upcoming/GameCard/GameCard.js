@@ -22,13 +22,14 @@ export default function GameCard({ gameFromParent, gameID }) {
     };
     dispatch(addModal(modal));
   };
-  
-  const homeIsWinner = game?.results && game?.homeTeam?._id === game?.results?.winningTeam;
+
+  const homeIsWinner =
+    game?.results && game?.homeTeam?._id === game?.results?.winningTeam;
   const getScore = () => {
     if (!game?.results) {
-      return 'vs';
+      return "vs";
     }
-    return `${leftTeam.score} - ${rightTeam.score}`
+    return `${leftTeam.score} - ${rightTeam.score}`;
   };
 
   useEffect(() => {
@@ -43,8 +44,12 @@ export default function GameCard({ gameFromParent, gameID }) {
 
   useEffect(() => {
     if (game) {
-      const homeScore = homeIsWinner ? game.results?.winningScore : game.results?.losingScore;
-      const awayScore = !homeIsWinner ? game.results?.winningScore : game.results?.losingScore;
+      const homeScore = homeIsWinner
+        ? game.results?.winningScore
+        : game.results?.losingScore;
+      const awayScore = !homeIsWinner
+        ? game.results?.winningScore
+        : game.results?.losingScore;
       if (user.teams.includes(game.awayTeam._id)) {
         setLeftTeam({ team: game.awayTeam, score: awayScore });
         setRightTeam({ team: game.homeTeam, score: homeScore });
@@ -53,7 +58,7 @@ export default function GameCard({ gameFromParent, gameID }) {
         setRightTeam({ team: game.awayTeam, score: awayScore });
       }
     }
-  }, [game, user.teams]);
+  }, [game, user.teams, homeIsWinner]);
 
   const callOpenLeague = () => {
     const modal = {
@@ -88,10 +93,9 @@ export default function GameCard({ gameFromParent, gameID }) {
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={2}>
-                  <Typography
-                    color="primary"
-                    variant="h4"
-                  >{getScore()}</Typography>
+                <Typography color="primary" variant="h4">
+                  {getScore()}
+                </Typography>
               </Grid>
               <Grid item xs={12} sm={5} className={classes.centerThenLeft}>
                 <Typography

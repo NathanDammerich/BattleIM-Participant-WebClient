@@ -49,7 +49,7 @@ const Auth = () => {
           </Typography>
           <form className={classes.form} action="/" onSubmit={handleSubmit}>
             <div className={classes.inputContainer}>
-              <label for="email" className={classes.label}>
+              <label htmlFor="email" className={classes.label}>
                 Email
               </label>
               <input
@@ -62,7 +62,7 @@ const Auth = () => {
             </div>
             <div className={classes.inputContainer}>
               <div className={classes.passwordLabelRow}>
-                <label for="password" className={classes.label}>
+                <label htmlFor="password" className={classes.label}>
                   Password
                 </label>
                 <p className={classes.label}>Forgot your password?</p>
