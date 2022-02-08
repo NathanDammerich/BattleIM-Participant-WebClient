@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Paper, Typography, Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { refreshUser, signin } from "../../actions/user";
 
 import logoWhiteBG from "../../images/logoWhiteBG.png";
 import useStyles from "./styles";
@@ -8,14 +10,23 @@ import useStyles from "./styles";
 const Auth = () => {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
-    if (email === "gregmyers@gmail.com" && password === "battleim") {
-      history.push("/home");
-    }
+    // e.preventDefault();
+
+    dispatch(
+      signin(
+        {
+          email: email,
+          password: password,
+        },
+        history
+      )
+    );
   };
 
   const handleEmailChange = (e) => {

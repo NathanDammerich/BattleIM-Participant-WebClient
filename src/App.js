@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, ThemeProvider } from "@material-ui/core";
 import { createTheme } from "@material-ui/core/styles";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { getUser } from "./actions/user";
+import { attemptRefresh } from "./actions/user";
 import Modal from "./components/Modal/Modal";
 import Auth from "./components/Auth/Auth";
 import Home from "./components/Home/Home";
@@ -28,17 +28,22 @@ const App = () => {
     },
   });
 
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  dispatch(getUser("61c0f2c5d1e0e4bcadaba576"));
+
+  useEffect(() => {
+    dispatch(attemptRefresh());
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Container maxWidth="lg">
-          <Switch>
+          {user ? <Home /> : <Auth />}
+          {/* <Switch>
             <Route path="/" exact component={Auth} />
             <Route path="/home" exact component={Home} />
-          </Switch>
+          </Switch> */}
           <Modal />
         </Container>
       </BrowserRouter>

@@ -9,14 +9,16 @@ import {
 } from "@material-ui/core";
 import { useTheme } from "@material-ui/core";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import homePageLogo from "../../images/1x/homePageLogo.png";
 import useStyles from "./styles";
+import { logout } from "../../actions/user";
 
 const Navbar = ({ setPage, page }) => {
   const classes = useStyles();
   const theme = useTheme();
+  const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
 
@@ -28,6 +30,10 @@ const Navbar = ({ setPage, page }) => {
     //   type: "User",
     // };
     // dispatch(addModal(modal));
+  };
+
+  const callLogout = (e) => {
+    dispatch(logout());
   };
 
   return (
@@ -81,7 +87,7 @@ const Navbar = ({ setPage, page }) => {
               variant="subtitle1"
               align={sm ? "right" : "center"}
               className={classes.user}
-              onClick={goToUser}
+              onClick={callLogout}
             >
               {user.name}
             </Typography>
