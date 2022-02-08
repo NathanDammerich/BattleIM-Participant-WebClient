@@ -24,14 +24,6 @@ const Navbar = ({ setPage, page }) => {
 
   const sm = useMediaQuery(theme.breakpoints.up("sm"));
 
-  const goToUser = (e) => {
-    // const modal = {
-    //   id: user._id,
-    //   type: "User",
-    // };
-    // dispatch(addModal(modal));
-  };
-
   const callLogout = (e) => {
     dispatch(logout());
   };

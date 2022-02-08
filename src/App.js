@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Container, ThemeProvider } from "@material-ui/core";
 import { createTheme } from "@material-ui/core/styles";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { attemptRefresh } from "./actions/user";
@@ -33,7 +33,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(attemptRefresh());
-  }, []);
+  }, [dispatch]);
 
   return (
     <ThemeProvider theme={theme}>

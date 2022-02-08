@@ -45,7 +45,7 @@ export const attemptRefresh = () => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   try {
-    const { data } = await api.logout();
+    await api.logout();
     dispatch({ type: "LOGOUT" });
   } catch (error) {
     console.log(error);

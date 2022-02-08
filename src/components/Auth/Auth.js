@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Paper, Typography, Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { refreshUser, signin } from "../../actions/user";
+import { useDispatch } from "react-redux";
+import { signin } from "../../actions/user";
 
 import logoWhiteBG from "../../images/logoWhiteBG.png";
 import useStyles from "./styles";
