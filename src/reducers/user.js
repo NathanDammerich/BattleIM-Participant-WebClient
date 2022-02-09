@@ -1,8 +1,10 @@
-const userReducer = (user = [], action) => {
+const userReducer = (user = null, action) => {
   switch (action.type) {
     case "FETCH_USER":
       return action.payload;
     case "UPDATE_USER":
+      return action.payload;
+    case "SIGN_IN":
       return action.payload;
     case "ADD_PASSED_QUIZ":
       return {
@@ -14,6 +16,8 @@ const userReducer = (user = [], action) => {
         ...user,
         teams: [...user.teams, action.payload],
       };
+    case "LOGOUT":
+      return null;
     default:
       return user;
   }
