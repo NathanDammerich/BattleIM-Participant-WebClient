@@ -2,7 +2,6 @@ import { API } from "./index";
 
 const setup = (store) => {
   const { dispatch } = store;
-  console.log(dispatch);
   API.interceptors.response.use(
     (res) => res,
     async (err) => {
