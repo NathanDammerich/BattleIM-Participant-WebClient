@@ -51,3 +51,14 @@ export const logout = () => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const googleAuthSuccess = (token) => async (dispatch) => {
+  console.log("googleAuthSuccess action called");
+  try {
+    const { data } = await api.googleSignIn(token);
+    dispatch({ type: "SIGN_IN", payload: data.user });
+  } catch (error) {
+    dispatch({ type: "LOGOUT" });
+    dispatch({ type: "SIGN_IN_ERROR", payload: true });
+  }
+};

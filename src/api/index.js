@@ -11,6 +11,8 @@ export const signin = (formData) => API.post("auth/signin", formData);
 export const signup = (formData) => API.post("auth/signup", formData);
 export const refreshUser = () => API.post("auth/token");
 export const logout = () => API.post("/auth/logout");
+export const googleSignIn = (token) =>
+  API.post("auth/googlesignin", { token: token });
 
 export const getGames = () => API.get("/games");
 export const getGame = (id) => API.get(`/games/${id}`);
