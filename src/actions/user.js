@@ -3,7 +3,6 @@ import * as api from "../api/index.js";
 export const getUser = (id) => async (dispatch) => {
   try {
     const { data } = await api.getUser(id);
-    console.log(data);
 
     dispatch({ type: "FETCH_USER", payload: data });
   } catch (error) {
@@ -13,9 +12,8 @@ export const getUser = (id) => async (dispatch) => {
 
 export const addPassedQuiz = (userID, quizID) => async (dispatch) => {
   try {
-    console.log("add passed quiz called");
     const data = await api.addPassedQuiz(userID, { quizID: quizID });
-    //console.log(data);
+
     dispatch({ type: "ADD_PASSED_QUIZ", payload: quizID });
   } catch (error) {
     console.log(error);
@@ -25,7 +23,6 @@ export const addPassedQuiz = (userID, quizID) => async (dispatch) => {
 export const signin = (formData, router) => async (dispatch) => {
   try {
     const { data } = await api.signin(formData);
-    console.log(data);
 
     dispatch({ type: "SIGN_IN", payload: data.user });
   } catch (error) {
@@ -54,7 +51,6 @@ export const logout = () => async (dispatch) => {
 };
 
 export const googleAuthSuccess = (token) => async (dispatch) => {
-  console.log("googleAuthSuccess action called");
   try {
     const { data } = await api.googleSignIn(token);
     dispatch({ type: "SIGN_IN", payload: data.user });
@@ -65,8 +61,6 @@ export const googleAuthSuccess = (token) => async (dispatch) => {
 };
 
 export const acceptInvite = (userID, teamID) => async (dispatch) => {
-  console.log("acceptInviteCalled");
-  console.log(teamID);
   try {
     const { data } = await api.acceptInvite(userID, { teamID: teamID });
     dispatch({ type: "ACCEPT_INVITE", payload: teamID });
