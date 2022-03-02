@@ -1,14 +1,16 @@
 import { Button, Grid, Typography } from "@material-ui/core";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
-import * as api from "../../../../api/index";
-
+import { useSelector, useDispatch } from "react-redux";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+
+import { removePlayer, sendInvite } from "../../../../actions/teams";
 import useStyles from "./styles";
+import * as api from "../../../../api/index";
 
 export default function RosterList({ team }) {
   const user = useSelector((state) => state.user);
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [players, setPlayers] = useState(team.players);
   const [invites, setInvites] = useState(team.invites);
   console.log(team.invites);
@@ -27,17 +29,18 @@ export default function RosterList({ team }) {
       )
     );
     console.log(players);
-    //dispatch(removePlayer(team._id, player._id));
+    dispatch(removePlayer(team._id, player._id));
   };
 
   const callRemoveInvitedPlayer = (player) => {
+    console.log(player);
     setInvites(
       invites.filter(
         (playerFromTeam) => String(playerFromTeam._id) !== String(player._id)
       )
     );
     console.log(players);
-    //dispatch(removePlayer(team._id, player._id));
+    dispatch(removePlayer(team._id, player._id));
   };
 
   const handleChange = async (e) => {
@@ -66,7 +69,7 @@ export default function RosterList({ team }) {
     setUserOptions([]);
     document.getElementById("queryString").value = null;
 
-    //dispatch(sendInvite(userToInvite, user._id, team._id));
+    dispatch(sendInvite(team._id, userToInvite));
   };
 
   if (team.players.length < 1) return null;
@@ -80,17 +83,18 @@ export default function RosterList({ team }) {
         </Grid>
         <Grid item xs={6} align="right">
           <>
-            {user._id === team.captain && (
-              <Button
-                variant="outlined"
-                size="small"
-                color="secondary"
-                className={classes.smallButton}
-                onClick={toggleEditRoster}
-              >
-                Edit Roster
-              </Button>
-            )}
+            {user._id === team.captain ||
+              (user._id === team.captain._id && (
+                <Button
+                  variant="outlined"
+                  size="small"
+                  color="secondary"
+                  className={classes.smallButton}
+                  onClick={toggleEditRoster}
+                >
+                  Edit Roster
+                </Button>
+              ))}
           </>
         </Grid>
       </Grid>

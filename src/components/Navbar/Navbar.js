@@ -12,6 +12,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import homePageLogo from "../../images/1x/homePageLogo.png";
+import InviteBar from "../InviteBar/InviteBar";
 import useStyles from "./styles";
 import { logout } from "../../actions/user";
 
@@ -74,15 +75,20 @@ const Navbar = ({ setPage, page }) => {
               </Button>
             </Container>
           </Grid>
-          <Grid item xs={12} sm={2}>
-            <Typography
-              variant="subtitle1"
-              align={sm ? "right" : "center"}
-              className={classes.user}
-              onClick={callLogout}
-            >
-              {user.name}
-            </Typography>
+          <Grid item container xs={12} sm={2} alignItems="center">
+            <Grid item xs={12} sm={6}>
+              <InviteBar />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Typography
+                variant="subtitle1"
+                align={sm ? "right" : "center"}
+                className={classes.user}
+                onClick={callLogout}
+              >
+                {user.name}
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
       </Toolbar>

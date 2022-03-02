@@ -43,8 +43,21 @@ export const createTeam = (division, teamName, user) => async (dispatch) => {
 };
 
 export const removePlayer = (teamID, playerID) => async (dispatch) => {
+  console.log(`teamID: ${teamID}`);
+  console.log(`playerID: ${playerID}`);
   try {
     const { data } = await api.removePlayer(teamID, playerID);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const sendInvite = (teamID, playerID) => async (dispatch) => {
+  console.log(`teamID: ${teamID}`);
+  console.log(`playerID: ${playerID}`);
+  try {
+    const { data } = await api.invitePlayer(teamID, playerID);
     return data;
   } catch (error) {
     console.log(error);

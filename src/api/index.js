@@ -31,11 +31,15 @@ export const getTeamsArray = (teamsArray) =>
   API.post("/teams/array", { teamsArray: teamsArray });
 export const removePlayer = (teamID, playerID) =>
   API.patch(`/teams/${teamID}/removePlayer`, { playerID: playerID });
+export const invitePlayer = (teamID, playerID) =>
+  API.patch(`/teams/${teamID}/invitePlayer`, { playerID: playerID });
 
 export const getUser = (id) => API.get(`/users/${id}`);
 export const createUser = (newUser) => API.get("/users", newUser);
 export const addPassedQuiz = (userID, quizID) =>
   API.patch(`/users/${userID}/quiz`, quizID);
+export const acceptInvite = (userID, teamID) =>
+  API.patch(`/users/${userID}/acceptInvite`, teamID);
 export const findUsers = (orgID, queryString) =>
   API.post("/users/findUsers", { orgID: orgID, queryString: queryString });
 
