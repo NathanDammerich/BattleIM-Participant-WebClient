@@ -12,6 +12,7 @@ import { removeModal } from "../../actions/modals";
 import MakeTeam from "../Leagues/MakeTeam/MakeTeam";
 import User from "../User/User";
 import LeagueCard from "../LeagueCard/LeagueCard";
+import InvitesCard from "../InvitesCard/InvitesCard";
 
 export default function Modal() {
   const classes = useStyles();
@@ -52,6 +53,8 @@ export default function Modal() {
               <User />
             ) : modal[modal.length - 1].type === "LeagueCard" ? (
               <LeagueCard leagueID={modal[modal.length - 1].id} />
+            ) : modal[modal.length - 1].type === "InvitesCard" ? (
+              <InvitesCard />
             ) : (
               <h1>unrecognized modal type</h1>
             )}

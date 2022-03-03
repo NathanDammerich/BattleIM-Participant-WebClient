@@ -91,7 +91,7 @@ export default function Quiz({ quizID }) {
               <>
                 <Grid item xs={12}>
                   <Typography variant="body1" color="primary">
-                    To create a team, you must pass the quiz first.
+                    To create or join a team, you must pass the quiz.
                   </Typography>
                 </Grid>
                 <Grid item xs={6} align="right">

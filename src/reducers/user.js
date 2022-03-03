@@ -9,7 +9,7 @@ const userReducer = (user = null, action) => {
     case "ADD_PASSED_QUIZ":
       return {
         ...user,
-        quizzesPassed: [user.quizzesPassed, action.payload],
+        quizzesPassed: [...user.quizzesPassed, action.payload],
       };
     case "ADD_TEAM_USER":
       return {
@@ -18,6 +18,12 @@ const userReducer = (user = null, action) => {
       };
     case "LOGOUT":
       return null;
+    case "ACCEPT_INVITE":
+      return {
+        ...user,
+        invites: user.invites.filter((invite) => invite !== action.payload),
+        teams: [...user.teams, action.payload],
+      };
     default:
       return user;
   }

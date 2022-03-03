@@ -3,7 +3,6 @@ import * as api from "../api/index.js";
 export const getUser = (id) => async (dispatch) => {
   try {
     const { data } = await api.getUser(id);
-    console.log(data);
 
     dispatch({ type: "FETCH_USER", payload: data });
   } catch (error) {
@@ -13,8 +12,8 @@ export const getUser = (id) => async (dispatch) => {
 
 export const addPassedQuiz = (userID, quizID) => async (dispatch) => {
   try {
-    //const data = await api.addPassedQuiz(userID, { quizID: quizID });
-    //console.log(data);
+    const data = await api.addPassedQuiz(userID, { quizID: quizID });
+
     dispatch({ type: "ADD_PASSED_QUIZ", payload: quizID });
   } catch (error) {
     console.log(error);
@@ -24,7 +23,6 @@ export const addPassedQuiz = (userID, quizID) => async (dispatch) => {
 export const signin = (formData, router) => async (dispatch) => {
   try {
     const { data } = await api.signin(formData);
-    console.log(data);
 
     dispatch({ type: "SIGN_IN", payload: data.user });
   } catch (error) {
@@ -53,12 +51,20 @@ export const logout = () => async (dispatch) => {
 };
 
 export const googleAuthSuccess = (token) => async (dispatch) => {
-  console.log("googleAuthSuccess action called");
   try {
     const { data } = await api.googleSignIn(token);
     dispatch({ type: "SIGN_IN", payload: data.user });
   } catch (error) {
     dispatch({ type: "LOGOUT" });
     dispatch({ type: "SIGN_IN_ERROR", payload: true });
+  }
+};
+
+export const acceptInvite = (userID, teamID) => async (dispatch) => {
+  try {
+    const { data } = await api.acceptInvite(userID, { teamID: teamID });
+    dispatch({ type: "ACCEPT_INVITE", payload: teamID });
+  } catch (error) {
+    console.log(error);
   }
 };

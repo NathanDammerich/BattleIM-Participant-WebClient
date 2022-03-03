@@ -12,7 +12,6 @@ export const getTeam = (id) => async (dispatch) => {
 };
 
 export const createTeam = (division, teamName, user) => async (dispatch) => {
-  console.log(user);
   const newTeam = {
     division: division._id,
     league: division.league._id,
@@ -45,6 +44,15 @@ export const createTeam = (division, teamName, user) => async (dispatch) => {
 export const removePlayer = (teamID, playerID) => async (dispatch) => {
   try {
     const { data } = await api.removePlayer(teamID, playerID);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const sendInvite = (teamID, playerID) => async (dispatch) => {
+  try {
+    const { data } = await api.invitePlayer(teamID, playerID);
     return data;
   } catch (error) {
     console.log(error);

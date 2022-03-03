@@ -11,12 +11,8 @@ export const getGames = () => async (dispatch) => {
 };
 
 export const getGame = (id) => async (dispatch) => {
-  console.log("getGame called");
   try {
-    console.log("getGame");
     const { data } = await api.getGame(id);
-    console.log(data);
-    console.log("game from getGame");
     return data;
   } catch (error) {
     console.log("getGame error");
