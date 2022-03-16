@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Card, Grid, Paper, Typography } from "@material-ui/core";
+import { Card, Grid, Typography } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 
 import { removeModal } from "../../actions/modals.js";

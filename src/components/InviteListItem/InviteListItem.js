@@ -6,6 +6,7 @@ import { addModal } from "../../actions/modals";
 import { acceptInvite } from "../../actions/user";
 import useStyles from "./styles";
 import useFetchData from "../../hooks/useFetchData.js";
+import {getTimeslotString} from "../../utils/datetime";
 
 export default function InviteListItem({ teamID }) {
   const [team] = useFetchData(null, teamID, "team");
@@ -49,7 +50,7 @@ export default function InviteListItem({ teamID }) {
           </Grid>
           <Grid item xs={6}>
             <Typography variant="body1" color="primary">
-              {team.division.timeSlot}
+              {getTimeslotString(team.division.timeSlot)}
             </Typography>
           </Grid>
           {user.quizzesPassed.includes(team.sport.quiz) || !team.sport.quiz ? (
