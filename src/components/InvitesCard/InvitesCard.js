@@ -17,7 +17,7 @@ export default function InvitesCard() {
         dispatch(removeModal());
       }
     }
-  }, [user]);
+  }, [user, dispatch]);
 
   return (
     <Card raised className={classes.card}>
