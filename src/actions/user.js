@@ -12,7 +12,7 @@ export const getUser = (id) => async (dispatch) => {
 
 export const addPassedQuiz = (userID, quizID) => async (dispatch) => {
   try {
-    const data = await api.addPassedQuiz(userID, { quizID: quizID });
+    await api.addPassedQuiz(userID, { quizID: quizID });
 
     dispatch({ type: "ADD_PASSED_QUIZ", payload: quizID });
   } catch (error) {
@@ -62,7 +62,7 @@ export const googleAuthSuccess = (token) => async (dispatch) => {
 
 export const acceptInvite = (userID, teamID) => async (dispatch) => {
   try {
-    const { data } = await api.acceptInvite(userID, { teamID: teamID });
+    await api.acceptInvite(userID, { teamID: teamID });
     dispatch({ type: "ACCEPT_INVITE", payload: teamID });
   } catch (error) {
     console.log(error);
