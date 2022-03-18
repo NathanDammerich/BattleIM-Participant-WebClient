@@ -13,7 +13,6 @@ export default function RosterList({ team }) {
   const dispatch = useDispatch();
   const [players, setPlayers] = useState(team.players);
   const [invites, setInvites] = useState(team.invites);
-  console.log(team.invites);
   const [isEditingRoster, setIsEditingRoster] = useState(false);
   const [userOptions, setUserOptions] = useState([]);
 
