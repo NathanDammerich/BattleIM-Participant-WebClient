@@ -60,10 +60,21 @@ export default makeStyles((theme) => ({
     "&:hover": {
       textDecoration: "underline",
       cursor: "pointer",
+      background: '#ddd',
     },
   },
   userList: {
     background: "#edf2f4",
+  },
+  userRow: {
+    paddingLeft: 5,
+    background: '#edf2f4',
+    "&:nth-of-type(even)": {
+      background: '#fff',
+    }
+  },
+  rosterContainer: {
+    marginTop: 25,
   },
   invited: {
     fontStyle: "italic",
