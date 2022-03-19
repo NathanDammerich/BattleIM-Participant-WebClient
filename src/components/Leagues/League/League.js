@@ -6,21 +6,10 @@ import useFetchData from "../../../hooks/useFetchData.js";
 import { Button, Card, Typography, Grid } from "@material-ui/core";
 import { addModal } from "../../../actions/modals.js";
 import useStyles from "./styles.js";
-
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+import {
+  getMonthDayString,
+  getTimeslotString,
+} from '../../../utils/datetime';
 
 export default function League({ leagueFromParent, leagueID }) {
   const [league] = useFetchData(leagueFromParent, leagueID, "league");
@@ -57,12 +46,6 @@ export default function League({ leagueFromParent, leagueID }) {
     dispatch(addModal(modal));
   };
 
-  const getDateString = (date) => {
-    const newDate = new Date(date);
-    const monthString = months[newDate.getMonth()];
-    return `${monthString} ${newDate.getDate()}`;
-  };
-
   const classes = useStyles();
 
   return (
@@ -94,16 +77,16 @@ export default function League({ leagueFromParent, leagueID }) {
                 variant="body1"
                 color="primary"
                 align="left"
-              >{`Registration: ${getDateString(
+              >{`Registration: ${getMonthDayString(
                 league.registrationOpen
-              )} - ${getDateString(league.registrationClose)}`}</Typography>
+              )} - ${getMonthDayString(league.registrationClose)}`}</Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography
                 variant="body1"
                 color="primary"
                 align="left"
-              >{`Season: ${getDateString(league.seasonStart)} - ${getDateString(
+              >{`Season: ${getMonthDayString(league.seasonStart)} - ${getMonthDayString(
                 league.seasonEnd
               )}`}</Typography>
             </Grid>
@@ -112,9 +95,9 @@ export default function League({ leagueFromParent, leagueID }) {
                 variant="body1"
                 color="primary"
                 align="left"
-              >{`Playoffs: ${getDateString(
+              >{`Playoffs: ${getMonthDayString(
                 league.playoffStart
-              )} - ${getDateString(league.playoffEnd)}`}</Typography>
+              )} - ${getMonthDayString(league.playoffEnd)}`}</Typography>
             </Grid>
 
             <Grid item xs={12} align="center">
@@ -136,7 +119,7 @@ export default function League({ leagueFromParent, leagueID }) {
               >
                 <Grid item xs={6}>
                   <Typography variant="body1" color="primary" align="left">
-                    {division.timeSlot}
+                    {getTimeslotString(division.timeSlot)}
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>

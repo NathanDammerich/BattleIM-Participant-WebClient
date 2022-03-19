@@ -76,7 +76,6 @@ export default function TeamCard({ teamFromParent, teamID, startExpanded }) {
           }
         }
       }
-      console.log(nextGame);
     }
   }, [team, nextGame]);
 

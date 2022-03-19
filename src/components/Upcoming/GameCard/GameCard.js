@@ -1,37 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { 
-  Card,
-  Typography,
-  Grid,
-  Container,
-  Menu,
-  IconButton,
-  MenuItem,
-  Box,
-} from "@material-ui/core";
+import { Card, Typography, Grid, Container } from "@material-ui/core";
 
 import useStyles from "./styles";
 import { getGame } from "../../../api";
 import { useDispatch, useSelector } from "react-redux";
 import { addModal } from "../../../actions/modals";
-import iCalGen from "ical-generator";
-import { MoreVert } from "@material-ui/icons";
-import moment from "moment";
-
-const generateCalUrl = (game) => {
-  const iCal = new iCalGen();
-
-  const date = moment(game.date).format('YYYY-MM-DD');
-  const time = moment(`2020-1-1 ${game.time}`).format('hh:mm a');
-  const start = moment(`${date} ${time}`).toDate();
-
-  const e = iCal.createEvent({
-    start,
-    summary: `${game.homeTeam.name} vs ${game.awayTeam.name} ${game.league} Game at ${game.location}`,
-    location: game.location,
-  })
-  return iCal.toURL();
-}
 
 export default function GameCard({ gameFromParent, gameID }) {
   const user = useSelector((state) => state.user);
@@ -39,7 +12,6 @@ export default function GameCard({ gameFromParent, gameID }) {
   const [game, setGame] = useState(null);
   const [leftTeam, setLeftTeam] = useState(null);
   const [rightTeam, setRightTeam] = useState(null);
-  const [anchorEl, setAnchorEl] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -95,13 +67,6 @@ export default function GameCard({ gameFromParent, gameID }) {
     };
     dispatch(addModal(modal));
   };
-  const toggleMenu = (event) => {
-    if (!anchorEl) {
-      setAnchorEl(event.currentTarget)
-    } else {
-      setAnchorEl(null);
-    }
-  }
 
   if (!game) {
     return null;
@@ -111,52 +76,44 @@ export default function GameCard({ gameFromParent, gameID }) {
       {leftTeam && rightTeam && (
         <Card className={classes.card} raised>
           <Grid container>
-            <Box display="flex" alignItems="center" width="100%">
-              <Grid item xs={12} container className={classes.marginTop}>
-                <Grid item xs={12} sm={5}>
-                  <Typography
-                    variant="h4"
-                    className={
-                      game.results
-                        ? game.results.winningTeam === leftTeam.team._id
-                          ? classes.win
-                          : classes.loss
-                        : classes.upcoming
-                    }
-                    onClick={() => openTeam(leftTeam.team._id)}
-                  >
-                    {leftTeam.team.name}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={2}>
-                  <Typography color="primary" variant="h4">
-                    {getScore()}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={5} className={classes.centerThenLeft}>
-                  <Typography
-                    color="primary"
-                    variant="h4"
-                    className={
-                      game.results
-                        ? game.results.winningTeam === rightTeam.team._id
-                          ? classes.win
-                          : classes.loss
-                        : classes.upcoming
-                    }
-                    onClick={() => openTeam(rightTeam.team._id)}
-                  >
-                    {rightTeam.team.name}
-                  </Typography>
-                </Grid>
+            <Grid item xs={12} container className={classes.marginTop}>
+              <Grid item xs={12} sm={5}>
+                <Typography
+                  variant="h4"
+                  className={
+                    game.results
+                      ? game.results.winningTeam === leftTeam.team._id
+                        ? classes.win
+                        : classes.loss
+                      : classes.upcoming
+                  }
+                  onClick={() => openTeam(leftTeam.team._id)}
+                >
+                  {leftTeam.team.name}
+                </Typography>
               </Grid>
-              <IconButton onClick={toggleMenu}><MoreVert/></IconButton>
-              <Menu id="test" anchorEl={anchorEl} open={!!anchorEl} onClose={toggleMenu}>
-                <a href={generateCalUrl(game)}>
-                  <MenuItem>Save to Calendar</MenuItem>
-                </a>
-              </Menu>
-            </Box>
+              <Grid item xs={12} sm={2}>
+                <Typography color="primary" variant="h4">
+                  {getScore()}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={5} className={classes.centerThenLeft}>
+                <Typography
+                  color="primary"
+                  variant="h4"
+                  className={
+                    game.results
+                      ? game.results.winningTeam === rightTeam.team._id
+                        ? classes.win
+                        : classes.loss
+                      : classes.upcoming
+                  }
+                  onClick={() => openTeam(rightTeam.team._id)}
+                >
+                  {rightTeam.team.name}
+                </Typography>
+              </Grid>
+            </Grid>
             {/* <Grid item xs={12} container>
             <Grid item xs={6}>
               <Typography

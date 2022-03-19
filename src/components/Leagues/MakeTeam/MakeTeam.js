@@ -4,6 +4,7 @@ import { createTeam } from "../../../actions/teams";
 import { useDispatch, useSelector } from "react-redux";
 
 import useFetchData from "../../../hooks/useFetchData";
+import {getTimeslotString} from "../../../utils/datetime";
 import useStyles from "./styles";
 
 export default function MakeTeam({ divisionID }) {
@@ -38,7 +39,7 @@ export default function MakeTeam({ divisionID }) {
               <Typography
                 variant="h6"
                 align="center"
-              >{`${division.league.sport.description}: ${division.timeSlot}`}</Typography>
+              >{`${division.league.sport.description}: ${getTimeslotString(division.timeSlot)}`}</Typography>
             </Grid>
             <Grid item xs={12} align="center">
               <form className={classes.form} action="/" autoComplete="off">

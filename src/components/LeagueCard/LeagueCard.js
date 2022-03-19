@@ -5,21 +5,7 @@ import { useDispatch } from "react-redux";
 import { addModal } from "../../actions/modals";
 import useStyles from "./styles.js";
 import useFetchData from "../../hooks/useFetchData";
-
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+import {getMonthDayString} from "../../utils/datetime";
 
 export default function LeagueCard({ leagueFromParent, leagueID }) {
   const classes = useStyles();
@@ -32,12 +18,6 @@ export default function LeagueCard({ leagueFromParent, leagueID }) {
       id: teamID,
     };
     dispatch(addModal(modal));
-  };
-
-  const getDateString = (date) => {
-    const newDate = new Date(date);
-    const monthString = months[newDate.getMonth()];
-    return `${monthString} ${newDate.getDate()}`;
   };
 
   return (
@@ -67,16 +47,16 @@ export default function LeagueCard({ leagueFromParent, leagueID }) {
                 variant="body1"
                 color="primary"
                 align="left"
-              >{`Registration: ${getDateString(
+              >{`Registration: ${getMonthDayString(
                 league.registrationOpen
-              )} - ${getDateString(league.registrationClose)}`}</Typography>
+              )} - ${getMonthDayString(league.registrationClose)}`}</Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography
                 variant="body1"
                 color="primary"
                 align="left"
-              >{`Season: ${getDateString(league.seasonStart)} - ${getDateString(
+              >{`Season: ${getMonthDayString(league.seasonStart)} - ${getMonthDayString(
                 league.seasonEnd
               )}`}</Typography>
             </Grid>
@@ -85,9 +65,9 @@ export default function LeagueCard({ leagueFromParent, leagueID }) {
                 variant="body1"
                 color="primary"
                 align="left"
-              >{`Playoffs: ${getDateString(
+              >{`Playoffs: ${getMonthDayString(
                 league.playoffStart
-              )} - ${getDateString(league.playoffEnd)}`}</Typography>
+              )} - ${getMonthDayString(league.playoffEnd)}`}</Typography>
             </Grid>
             <Grid item xs={12} align="center">
               <Typography
