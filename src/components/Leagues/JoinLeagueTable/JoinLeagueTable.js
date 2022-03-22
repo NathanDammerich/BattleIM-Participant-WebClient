@@ -72,7 +72,6 @@ export default function JoinLeagueTable() {
   }, [org]);
 
   const callOpenLeague = (leagueID) => {
-    console.log(leagueID);
     const modal = {
       type: "League",
       id: leagueID,
