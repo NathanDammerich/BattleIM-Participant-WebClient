@@ -57,10 +57,6 @@ export default function LeagueTable() {
       setRows((rows) => [...rows, row]);
     }
   }, [teams]);
-  if (rows.length === 0)
-    return (
-      <Typography variant="subtitle1">You have no active leagues.</Typography>
-    );
 
   const callOpenLeague = (leagueID) => {
     console.log(leagueID);
@@ -99,25 +95,42 @@ export default function LeagueTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.leagueName}>
+          {rows.length === 0 ? (
+            <StyledTableRow>
               <StyledTableCell
                 component="th"
                 scope="row"
-                className={classes.link}
-                onClick={() => callOpenLeague(row.leagueID)}
+                className={classes.noLeagues}
               >
-                {row.leagueName}
+                <Typography variant="caption text">
+                  No active leagues
+                </Typography>
               </StyledTableCell>
-              <StyledTableCell
-                align="right"
-                className={classes.link}
-                onClick={() => callOpenTeam(row.teamID)}
-              >
-                {row.teamName}
-              </StyledTableCell>
+              <StyledTableCell align="right">&nbsp;</StyledTableCell>
             </StyledTableRow>
-          ))}
+          ) : (
+            <>
+              {rows.map((row) => (
+                <StyledTableRow key={row.leagueName}>
+                  <StyledTableCell
+                    component="th"
+                    scope="row"
+                    className={classes.link}
+                    onClick={() => callOpenLeague(row.leagueID)}
+                  >
+                    {row.leagueName}
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align="right"
+                    className={classes.link}
+                    onClick={() => callOpenTeam(row.teamID)}
+                  >
+                    {row.teamName}
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </>
+          )}
         </TableBody>
       </Table>
     </TableContainer>

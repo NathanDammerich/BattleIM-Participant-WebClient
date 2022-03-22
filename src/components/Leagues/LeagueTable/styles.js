@@ -11,4 +11,7 @@ export default makeStyles((theme) => ({
     background: theme.palette.secondary.main,
     width: "100%",
   },
+  noLeagues: {
+    fontStyle: "italic",
+  },
 }));
