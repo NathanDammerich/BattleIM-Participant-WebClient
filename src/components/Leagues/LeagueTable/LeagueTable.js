@@ -54,7 +54,7 @@ export default function LeagueTable() {
     for (let i = 0; i < teams.length; i++) {
       console.log(i);
       const row = createData(teams[i]);
-      setRows([...rows, row]);
+      setRows((rows) => [...rows, row]);
     }
   }, [teams]);
   if (rows.length === 0)
