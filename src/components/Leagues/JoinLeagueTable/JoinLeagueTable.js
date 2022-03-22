@@ -41,15 +41,6 @@ export default function JoinLeagueTable() {
   const [org, setOrg] = useFetchData(null, user.orgs[0], "org");
   const [rows, setRows] = React.useState([]);
 
-  function createData(team) {
-    return {
-      leagueName: team.leagueName,
-      leagueID: team.league,
-      teamName: team.name,
-      teamID: team._id,
-    };
-  }
-
   React.useEffect(() => {
     if (!org) return;
     for (let sport of org.sports) {
@@ -80,26 +71,11 @@ export default function JoinLeagueTable() {
     }
   }, [org]);
 
-  // if (rows.length === 0)
-  //   return (
-  //     <Typography variant="subtitle1">
-  //       No leagues open for registration
-  //     </Typography>
-  //   );
-
   const callOpenLeague = (leagueID) => {
     console.log(leagueID);
     const modal = {
       type: "League",
       id: leagueID,
-    };
-    dispatch(addModal(modal));
-  };
-
-  const callOpenTeam = (teamID) => {
-    const modal = {
-      type: "Team",
-      id: teamID,
     };
     dispatch(addModal(modal));
   };
