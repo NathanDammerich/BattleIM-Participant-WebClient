@@ -7,6 +7,7 @@ import {
   getDivision,
   getUpcomingGames,
   getTeamsArray,
+  getOrg,
 } from "../api";
 
 export default function useFetchData(dataFromParent, dataID, identifier) {
@@ -29,6 +30,8 @@ export default function useFetchData(dataFromParent, dataID, identifier) {
         data = await getTeamsArray(dataID);
       } else if (identifier === "upcomingGames") {
         data = await getUpcomingGames(dataID);
+      } else if (identifier === "org") {
+        data = await getOrg(dataID);
       }
       return data;
     };

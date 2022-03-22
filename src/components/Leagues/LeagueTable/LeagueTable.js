@@ -84,10 +84,18 @@ export default function LeagueTable() {
       <Table aria-label="customized table">
         <TableHead>
           <TableRow className={classes.header}>
-            <StyledTableCell className={classes.header}>
-              Active Leagues
+            <StyledTableCell
+              style={{ border: "none" }}
+              className={classes.header}
+            >
+              <Typography variant="h6">My Leagues</Typography>
             </StyledTableCell>
-            <StyledTableCell className={classes.header}>&nbsp;</StyledTableCell>
+            <StyledTableCell
+              style={{ border: "none" }}
+              className={classes.header}
+            >
+              &nbsp;
+            </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
