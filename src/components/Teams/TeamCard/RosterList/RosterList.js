@@ -74,7 +74,7 @@ export default function RosterList({ team }) {
 
   if (team.players.length < 1) return null;
   return (
-    <Grid container>
+    <Grid container className={classes.rosterContainer}>
       <Grid item xs={12} container alignItems="center">
         <Grid item xs={6}>
           <Typography variant="h6" align="left">
@@ -99,7 +99,14 @@ export default function RosterList({ team }) {
         </Grid>
       </Grid>
       {players.map((player) => (
-        <Grid item xs={12} container key={player._id} alignItems="center">
+        <Grid
+          item
+          xs={12}
+          container
+          key={player._id}
+          alignItems="center"
+          className={classes.userRow}
+        >
           <Grid item xs={6} align="left">
             <Typography>
               {player.name} {player._id === team.captain && " - Captain"}
@@ -127,7 +134,13 @@ export default function RosterList({ team }) {
       ))}
       {invites.length > 0 &&
         invites.map((invitedPlayer) => (
-          <Grid item xs={12} container key={invitedPlayer._id}>
+          <Grid
+            item
+            xs={12}
+            container
+            key={invitedPlayer._id}
+            className={classes.userRow}
+          >
             <Grid item xs={6} align="left">
               <Typography variant="body1" color="primary" align="left">
                 {invitedPlayer.name}
