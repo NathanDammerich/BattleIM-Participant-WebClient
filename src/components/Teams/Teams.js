@@ -1,11 +1,13 @@
-import { Grid } from "@material-ui/core";
+import { Grid, Box, Typography } from "@material-ui/core";
 import React from "react";
 import { useSelector } from "react-redux";
 
+import useStyles from "./styles.js";
 import TeamCard from "./TeamCard/TeamCard";
 
 export default function Teams() {
   const user = useSelector((state) => state.user);
+  const classes = useStyles();
 
   return (
     <>
@@ -33,7 +35,14 @@ export default function Teams() {
             </Grid>
           )
         ) : (
-          <h1>Waiting on teams</h1>
+          <Grid item xs={12} align="center">
+            <Box className={classes.emptyState}>
+              <Typography variant="h4">
+                Uh oh! Time to join another team!
+              </Typography>
+              <Typography variant="caption">Start in the League tab</Typography>
+            </Box>
+          </Grid>
         )}
       </Grid>
     </>
