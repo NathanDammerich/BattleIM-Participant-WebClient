@@ -4,6 +4,7 @@ export default makeStyles((theme) => ({
   card: {
     margin: "25px 0",
     maxWidth: "500px",
+    padding: "10px 10px",
   },
   container: {
     padding: "10px 25px",
