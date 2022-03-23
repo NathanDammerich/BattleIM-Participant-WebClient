@@ -5,7 +5,9 @@ import { useDispatch } from "react-redux";
 import { addModal } from "../../actions/modals";
 import useStyles from "./styles.js";
 import useFetchData from "../../hooks/useFetchData";
-import {getMonthDayString} from "../../utils/datetime";
+import { getMonthDayString } from "../../utils/datetime";
+import StandingsTable from "./StandingsTable/StandingsTable";
+import LeagueDatesTable from "./LeagueDatesTable/LeagueDatesTable";
 
 export default function LeagueCard({ leagueFromParent, leagueID }) {
   const classes = useStyles();
@@ -24,7 +26,7 @@ export default function LeagueCard({ leagueFromParent, leagueID }) {
     <>
       {league && (
         <Card raised className={classes.card}>
-          <Grid container className={classes.container}>
+          <Grid container spacing={1} className={classes.container}>
             <Grid item xs={12}>
               <Typography variant="h5" color="primary" align="center">
                 {`${league.description} ${league.sport.description}`}
@@ -42,62 +44,14 @@ export default function LeagueCard({ leagueFromParent, leagueID }) {
                 </Typography>
               </a>
             </Grid>
-            <Grid item xs={12}>
-              <Typography
-                variant="body1"
-                color="primary"
-                align="left"
-              >{`Registration: ${getMonthDayString(
-                league.registrationOpen
-              )} - ${getMonthDayString(league.registrationClose)}`}</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography
-                variant="body1"
-                color="primary"
-                align="left"
-              >{`Season: ${getMonthDayString(league.seasonStart)} - ${getMonthDayString(
-                league.seasonEnd
-              )}`}</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography
-                variant="body1"
-                color="primary"
-                align="left"
-              >{`Playoffs: ${getMonthDayString(
-                league.playoffStart
-              )} - ${getMonthDayString(league.playoffEnd)}`}</Typography>
-            </Grid>
-            <Grid item xs={12} align="center">
-              <Typography
-                variant="h6"
-                color="secondary"
-                className={classes.divisionHeading}
-              >
-                Standings
-              </Typography>
-            </Grid>
-            {league.teams.map((team) => (
-              <Grid item container xs={12} key={team._id}>
-                <Grid item xs={6} key={team._id}>
-                  <Typography
-                    variant="body1"
-                    align="left"
-                    className={classes.clickable}
-                    onClick={() => callOpenTeam(team._id)}
-                  >
-                    {team.name}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography
-                    variant="body1"
-                    align="right"
-                  >{`${team.wins}-${team.losses}`}</Typography>
-                </Grid>
+            <Grid spacing={3} container item xs={12}>
+              <Grid item xs={12} sm={6}>
+                <LeagueDatesTable league={league} />
               </Grid>
-            ))}
+              <Grid item xs={12} sm={6}>
+                <StandingsTable teams={league?.teams} />
+              </Grid>
+            </Grid>
           </Grid>
         </Card>
       )}
