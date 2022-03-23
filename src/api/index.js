@@ -56,6 +56,7 @@ export const getSport = (id) => API.get(`/sports/${id}`);
 export const updateSport = (id, updatedSport) =>
   API.patch(`/sports/${id}`, updatedSport);
 export const createSport = (newSport) => API.post("/sports", newSport);
+export const getSportWithLeagues = (id) => API.get(`/sports/${id}/withLeagues`);
 
 export const getQuiz = (id) => API.get(`/quizzes/${id}`);
 export const createQuiz = (newQuiz) => API.post("/quizzes", newQuiz);

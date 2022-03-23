@@ -3,22 +3,35 @@ import React, { useState, useEffect } from "react";
 
 import SportCard from "./SportCard/SportCard";
 import { getOrg } from "../../api";
-import useStyles from "./styles";
+import { useSelector } from "react-redux";
+import { Typography } from "@material-ui/core";
+import LeagueTable from "./LeagueTable/LeagueTable";
+import JoinLeagueTable from "./JoinLeagueTable/JoinLeagueTable";
 
-const sportUniqueSearchString = (sport = {}) => (`${sport.description}_${sport.leagues.map(l => l.description).join('_')}`.toUpperCase())
+import useStyles from "./styles.js";
+
+const sportUniqueSearchString = (sport = {}) =>
+  `${sport.description}_${sport.leagues
+    .map((l) => l.description)
+    .join("_")}`.toUpperCase();
 
 export default function Leagues() {
-  const [org, setOrg] = useState(null);
   const classes = useStyles();
-  const [search, setSearch] = React.useState('');
-  const filteredSports = React.useMemo(() => 
-    org?.sports?.filter(s => sportUniqueSearchString(s).includes(search.toUpperCase())) ?? [],
-  [org?.sports, search]);
+  const [org, setOrg] = useState(null);
+  const user = useSelector((state) => state.user);
+  const [search, setSearch] = React.useState("");
+  const filteredSports = React.useMemo(
+    () =>
+      org?.sports?.filter((s) =>
+        sportUniqueSearchString(s).includes(search.toUpperCase())
+      ) ?? [],
+    [org?.sports, search]
+  );
 
   const handleSearchUpdate = (e) => setSearch(e.target.value);
 
   useEffect(() => {
-    fetchOrg("617f480dfec82da4aec5705c").then((org) => {
+    fetchOrg(user.orgs[0]).then((org) => {
       setOrg(org.data);
     });
   }, []);
@@ -29,21 +42,15 @@ export default function Leagues() {
   };
 
   return (
-    <>
-      <Box className={classes.pageTopBar}>
-        <TextField
-          onChange={handleSearchUpdate}
-          placeholder="Search..."
-        />
-      </Box>
-      <Grid container spacing={3}>
-        {org &&
-          filteredSports.map((sport) => (
-            <Grid item xs={12} sm={6} md={4} key={sport._id}>
-              <SportCard sport={sport} />
-            </Grid>
-          ))}
+    <Grid container spacing={6} className={classes.topSpace}>
+      <Grid container item xs={12} sm={6}>
+        <Grid item xs={12}>
+          <LeagueTable />
+        </Grid>
       </Grid>
-    </>
+      <Grid container item xs={12} sm={6}>
+        <JoinLeagueTable />
+      </Grid>
+    </Grid>
   );
 }
