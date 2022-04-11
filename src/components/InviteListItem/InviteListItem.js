@@ -47,7 +47,7 @@ export default function InviteListItem({ teamID }) {
   if (!team) return null;
   return (
     <Paper elevation={3} className={classes.paper}>
-      <Grid container>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography
             variant="h6"

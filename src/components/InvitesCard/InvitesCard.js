@@ -23,7 +23,9 @@ export default function InvitesCard() {
     <Card raised className={classes.card}>
       <Grid container>
         <Grid item xs={12}>
-          <Typography variant="h5">Team Invites</Typography>
+          <Typography variant="h5" className={classes.header}>
+            Team Invites
+          </Typography>
         </Grid>
         {user.invites.map((invite) => (
           <Grid item xs={12}>

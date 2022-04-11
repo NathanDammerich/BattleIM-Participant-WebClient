@@ -11,7 +11,7 @@ const getMonthDayString = (date) => {
 const getTimeslotString = (timeslot) => {
   if (Array.isArray(timeslot)) {
     const currSlot = timeslot[0];
-    return `${currSlot.day} ${moment(currSlot.timeStart).format(
+    return `${currSlot.day}s ${moment(currSlot.timeStart).format(
       "h:mma"
     )}-${moment(currSlot.timeEnd).format("h:mma")}`;
   }

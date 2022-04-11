@@ -4,4 +4,7 @@ export default makeStyles((theme) => ({
   card: {
     padding: theme.spacing(2),
   },
+  header: {
+    marginBottom: theme.spacing(2),
+  },
 }));
