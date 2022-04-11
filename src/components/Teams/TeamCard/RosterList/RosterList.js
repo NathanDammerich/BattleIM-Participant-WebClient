@@ -1,7 +1,7 @@
 import { Button, Grid, Typography } from "@material-ui/core";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import { useSelector, useDispatch } from "react-redux";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { removePlayer, sendInvite } from "../../../../actions/teams";
 import useStyles from "./styles";
@@ -16,6 +16,16 @@ export default function RosterList({ team }) {
   console.log(team.invites);
   const [isEditingRoster, setIsEditingRoster] = useState(false);
   const [userOptions, setUserOptions] = useState([]);
+
+  useEffect(() => {
+    let playersArray = [...players];
+    playersArray = playersArray.filter((player) => player._id !== team.captain);
+    playersArray = playersArray.filter(
+      (player) => player._id !== team.captain?._id
+    );
+    console.log(playersArray);
+    setPlayers([team.captain, ...playersArray]);
+  }, []);
 
   const toggleEditRoster = () => {
     setIsEditingRoster(!isEditingRoster);
@@ -109,7 +119,9 @@ export default function RosterList({ team }) {
         >
           <Grid item xs={6} align="left">
             <Typography>
-              {player.name} {player._id === team.captain && " - Captain"}
+              {player.name}{" "}
+              {player._id === team.captain ||
+                (player._id === team.captain?._id && " - Captain")}
             </Typography>
           </Grid>
           <Grid item xs={6} align="right">

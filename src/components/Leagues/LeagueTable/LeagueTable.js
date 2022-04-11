@@ -51,6 +51,7 @@ export default function LeagueTable() {
 
   React.useEffect(() => {
     if (!teams) return;
+    setRows([]);
     for (let i = 0; i < teams.length; i++) {
       console.log(i);
       const row = createData(teams[i]);

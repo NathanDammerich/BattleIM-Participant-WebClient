@@ -40,7 +40,9 @@ export default function Teams() {
               <Typography variant="h4">
                 Uh oh! Time to join another team!
               </Typography>
-              <Typography variant="caption">Start in the League tab</Typography>
+              <Typography variant="caption">
+                Start in the Leagues tab
+              </Typography>
             </Box>
           </Grid>
         )}
